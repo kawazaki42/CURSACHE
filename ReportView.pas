@@ -1,0 +1,90 @@
+unit ReportView;
+
+{$mode ObjFPC}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ActnList,
+  StdActns,
+
+  Dateutils,
+  DBRecord;
+
+type
+
+  { TFormReport }
+
+  TFormReport = class(TForm)
+    ActionList1: TActionList;
+    Button1: TButton;
+    Button2: TButton;
+    FileExit1: TFileExit;
+    FileSaveAs1: TFileSaveAs;
+    Memo1: TMemo;
+    procedure Button1Click(Sender: TObject);
+    procedure FileSaveAs1Accept(Sender: TObject);
+  private
+
+  public
+
+  end;
+
+var
+  FormReport: TFormReport;
+
+procedure ShowReport(storage: TRecordList);
+
+implementation
+
+uses
+  LazUTF8;
+  //DBRecord;
+
+procedure ShowReport(storage: TRecordList);
+var
+  rec: TRecord;
+  line: String;
+  sorted: TRecordList;
+begin
+  FormReport.Memo1.Clear;
+  sorted := SortByDate(storage);
+  // ShowMessage(sorted.Count.ToString);
+
+  //FormReport.Memo1.Append('Книга Автор № билета Читатель Долг');
+  FormReport.Memo1.Append('Долг (дн.) | № билета | Читатель | Автор | Книга');
+  FormReport.Memo1.Append('------------------------------------------------');
+  for rec in sorted do
+  begin
+    {line := rec.name + ' ' + rec.author + ' ' + rec.cardID + ' ' +
+            rec.reader + ' ' +
+            DaysBetween(rec.returndate, today).toString;}
+    line := format('%10d | %s | %s | %s | %s', [
+      DaysBetween(rec.returndate, today), //.toString.format + ' | ' +
+      utf8padleft(rec.cardID, 8), //+ ' | ' +
+      utf8padleft(rec.reader, 20), //+ ' | ' +
+      utf8padleft(rec.author, 20), //+ ' | ' +
+      rec.name
+    ]);
+    //line := DateToStr(rec.returndate);
+    FormReport.Memo1.Append( line );
+  end;
+  sorted.free;
+end;
+
+{$R *.lfm}
+
+{ TFormReport }
+
+procedure TFormReport.Button1Click(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TFormReport.FileSaveAs1Accept(Sender: TObject);
+begin
+  Memo1.Lines.SaveToFile(FileSaveAs1.Dialog.FileName);
+end;
+
+end.
+

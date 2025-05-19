@@ -1,0 +1,62 @@
+object FormReport: TFormReport
+  Left = 448
+  Height = 240
+  Top = 288
+  Width = 320
+  Caption = 'Отчет'
+  ClientHeight = 240
+  ClientWidth = 320
+  LCLVersion = '3.8.0.0'
+  object Memo1: TMemo
+    Left = 0
+    Height = 202
+    Top = 0
+    Width = 320
+    Align = alTop
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Font.Name = 'Courier New'
+    ParentFont = False
+    ReadOnly = True
+    ScrollBars = ssAutoBoth
+    TabOrder = 0
+    WordWrap = False
+  end
+  object Button1: TButton
+    Left = 240
+    Height = 25
+    Hint = 'Выход'
+    Top = 208
+    Width = 75
+    Anchors = [akRight, akBottom]
+    Caption = 'В&ыход'
+    Default = True
+    TabOrder = 1
+    OnClick = Button1Click
+  end
+  object Button2: TButton
+    Left = 8
+    Height = 25
+    Top = 208
+    Width = 104
+    Action = FileSaveAs1
+    Anchors = [akLeft, akBottom]
+    Caption = 'Сохранить &как...'
+    TabOrder = 2
+  end
+  object ActionList1: TActionList
+    Left = 144
+    Top = 208
+    object FileExit1: TFileExit
+      Category = 'File'
+      Caption = 'В&ыход'
+      Hint = 'Выход'
+    end
+    object FileSaveAs1: TFileSaveAs
+      Category = 'File'
+      Caption = 'Сохранить &как ...'
+      Dialog.Filter = 'Текстовый файл|*.txt'
+      Hint = 'Сохранить как...'
+      OnAccept = FileSaveAs1Accept
+    end
+  end
+end
