@@ -63,6 +63,7 @@ object FormMain: TFormMain
     Constraints.MinHeight = 120
     FixedCols = 0
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goDblClickAutoSize, goSmoothScroll]
+    RowCount = 4
     TabOrder = 0
     OnCompareCells = StringGridCompareCells
     OnResize = StringGridResize
@@ -203,7 +204,7 @@ object FormMain: TFormMain
       OnClick = ButtonDeleteClick
     end
   end
-  object ToggleBox1: TToggleBox
+  object ToggleBox1: TButton
     Left = 272
     Height = 25
     Top = 192
@@ -211,7 +212,7 @@ object FormMain: TFormMain
     Anchors = [akLeft, akBottom]
     Caption = 'Поиск'
     TabOrder = 3
-    OnChange = ToggleBox1Change
+    OnClick = ToggleBox1Change
   end
   object MainMenu1: TMainMenu
     Left = 8

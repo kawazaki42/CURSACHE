@@ -8,23 +8,21 @@
       <Unit>
         <Filename Value="BooksDB.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="6"/>
-        <TopLine Value="4"/>
+        <EditorIndex Value="5"/>
         <CursorPos Y="25"/>
-        <UsageCount Value="52"/>
+        <UsageCount Value="55"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="mainwindow.pas"/>
+        <Filename Value="MainWindow.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FormMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="MainWindow"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="160"/>
-        <CursorPos X="58" Y="166"/>
-        <UsageCount Value="52"/>
+        <TopLine Value="190"/>
+        <CursorPos X="23" Y="193"/>
+        <UsageCount Value="55"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -34,29 +32,27 @@
         <UnitName Value="LinkedLists"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="24" Y="11"/>
-        <UsageCount Value="52"/>
+        <UsageCount Value="55"/>
       </Unit>
       <Unit>
-        <Filename Value="dbrecord.pas"/>
+        <Filename Value="DBRecord.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DBRecord"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="110"/>
-        <CursorPos Y="26"/>
-        <UsageCount Value="52"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="119"/>
+        <CursorPos X="19" Y="125"/>
+        <UsageCount Value="55"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="reportview.pas"/>
+        <Filename Value="ReportView.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FormReport"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="ReportView"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="59"/>
-        <CursorPos X="44" Y="62"/>
-        <UsageCount Value="28"/>
+        <TopLine Value="49"/>
+        <CursorPos X="53" Y="54"/>
+        <UsageCount Value="31"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -75,10 +71,10 @@
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\packages\fcl-stl\src\glinkedlist.pp"/>
-        <EditorIndex Value="7"/>
-        <TopLine Value="15"/>
-        <CursorPos X="5" Y="37"/>
-        <UsageCount Value="17"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="44"/>
+        <CursorPos X="36" Y="86"/>
+        <UsageCount Value="19"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -172,10 +168,11 @@
       <Unit>
         <Filename Value="C:\lazarus\lcl\grids.pas"/>
         <UnitName Value="Grids"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="12353"/>
-        <CursorPos Y="12360"/>
-        <UsageCount Value="15"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="5520"/>
+        <CursorPos X="35" Y="5525"/>
+        <UsageCount Value="16"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\components\lazutils\maps.pp"/>
@@ -218,9 +215,11 @@
       <Unit>
         <Filename Value="C:\lazarus\components\lazutils\lcsvutils.pas"/>
         <UnitName Value="LCSVUtils"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos Y="12"/>
-        <UsageCount Value="9"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="18"/>
+        <CursorPos X="3" Y="20"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\sysstrh.inc"/>
@@ -291,138 +290,27 @@
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\syshelph.inc"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="104"/>
         <CursorPos X="14" Y="109"/>
         <UsageCount Value="13"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\syshelp.inc"/>
-        <EditorIndex Value="4"/>
-        <CursorPos X="3" Y="169"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="5" Y="2"/>
         <UsageCount Value="12"/>
-        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\lcl\stdctrls.pp"/>
         <UnitName Value="StdCtrls"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="943"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1042"/>
         <CursorPos X="3" Y="950"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="reportview.pas"/>
-        <Caret Line="44" Column="6" TopLine="34"/>
-      </Position>
-      <Position>
-        <Filename Value="reportview.pas"/>
-        <Caret Line="43" Column="32" TopLine="34"/>
-      </Position>
-      <Position>
-        <Filename Value="reportview.pas"/>
-        <Caret Line="45" Column="37" TopLine="34"/>
-      </Position>
-      <Position>
-        <Filename Value="reportview.pas"/>
-        <Caret Line="43" Column="58" TopLine="37"/>
-      </Position>
-      <Position>
-        <Filename Value="reportview.pas"/>
-        <Caret Line="46" Column="47" TopLine="37"/>
-      </Position>
-      <Position>
-        <Filename Value="reportview.pas"/>
-        <Caret Line="50" Column="34" TopLine="40"/>
-      </Position>
-      <Position>
-        <Filename Value="reportview.pas"/>
-        <Caret Line="55" Column="31" TopLine="46"/>
-      </Position>
-      <Position>
-        <Filename Value="reportview.pas"/>
-        <Caret Line="47" Column="76" TopLine="43"/>
-      </Position>
-      <Position>
-        <Filename Value="reportview.pas"/>
-        <Caret Line="49" Column="76" TopLine="45"/>
-      </Position>
-      <Position>
-        <Filename Value="reportview.pas"/>
-        <Caret Line="50" Column="76" TopLine="46"/>
-      </Position>
-      <Position>
-        <Filename Value="reportview.pas"/>
-        <Caret Line="51" Column="76" TopLine="47"/>
-      </Position>
-      <Position>
-        <Filename Value="reportview.pas"/>
-        <Caret Line="52" Column="76" TopLine="48"/>
-      </Position>
-      <Position>
-        <Filename Value="reportview.pas"/>
-        <Caret Line="54" Column="76" TopLine="54"/>
-      </Position>
-      <Position>
-        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\syshelph.inc"/>
-        <Caret Line="67" Column="23" TopLine="64"/>
-      </Position>
-      <Position>
-        <Filename Value="reportview.pas"/>
-        <Caret Line="60" Column="63" TopLine="51"/>
-      </Position>
-      <Position>
-        <Filename Value="reportview.pas"/>
-        <Caret Line="67" Column="5" TopLine="55"/>
-      </Position>
-      <Position>
-        <Filename Value="reportview.pas"/>
-        <Caret Line="85" Column="37" TopLine="76"/>
-      </Position>
-      <Position>
-        <Filename Value="mainwindow.pas"/>
-        <Caret Line="195" Column="21" TopLine="182"/>
-      </Position>
-      <Position>
-        <Filename Value="mainwindow.pas"/>
-        <Caret Line="91" Column="23" TopLine="91"/>
-      </Position>
-      <Position>
-        <Filename Value="mainwindow.pas"/>
-        <Caret Line="90" Column="23" TopLine="90"/>
-      </Position>
-      <Position>
-        <Filename Value="mainwindow.pas"/>
-        <Caret Line="97" Column="23" TopLine="97"/>
-      </Position>
-      <Position>
-        <Filename Value="mainwindow.pas"/>
-        <Caret Line="40" Column="23" TopLine="33"/>
-      </Position>
-      <Position>
-        <Filename Value="mainwindow.pas"/>
-        <Caret Line="131" Column="38" TopLine="121"/>
-      </Position>
-      <Position>
-        <Filename Value="mainwindow.pas"/>
-        <Caret Line="125" Column="12" TopLine="121"/>
-      </Position>
-      <Position>
-        <Filename Value="mainwindow.pas"/>
-        <Caret Line="134" Column="41" TopLine="121"/>
-      </Position>
-      <Position>
-        <Filename Value="mainwindow.pas"/>
-        <Caret Line="122" TopLine="119"/>
-      </Position>
-      <Position>
-        <Filename Value="mainwindow.pas"/>
-        <Caret Line="127" Column="3" TopLine="122"/>
-      </Position>
+    <JumpHistory HistoryIndex="28">
       <Position>
         <Filename Value="mainwindow.pas"/>
         <Caret Line="72" Column="22" TopLine="64"/>
@@ -434,6 +322,110 @@
       <Position>
         <Filename Value="mainwindow.pas"/>
         <Caret Line="166" Column="49" TopLine="158"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="380" Column="32" TopLine="375"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="25" Column="63" TopLine="13"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="148" Column="28" TopLine="137"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\lazarus\components\lazutils\lcsvutils.pas"/>
+        <Caret Line="25" Column="13" TopLine="18"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="148" Column="5" TopLine="138"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="142" Column="9" TopLine="137"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="153" Column="18" TopLine="143"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="145" Column="50" TopLine="138"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="10" Column="17"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="4" Column="29"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="33" Column="51" TopLine="28"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="381" Column="36" TopLine="375"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="12" Column="3" TopLine="53"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="185" Column="5" TopLine="174"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="90" Column="5" TopLine="83"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="184" Column="63" TopLine="177"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="151" Column="21" TopLine="121"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="373" Column="38" TopLine="347"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="361" Column="14" TopLine="357"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="373" Column="48" TopLine="363"/>
+      </Position>
+      <Position>
+        <Filename Value="ReportView.pas"/>
+        <Caret Line="57" Column="33" TopLine="53"/>
+      </Position>
+      <Position>
+        <Filename Value="ReportView.pas"/>
+        <Caret Line="46" Column="17" TopLine="39"/>
+      </Position>
+      <Position>
+        <Filename Value="ReportView.pas"/>
+        <Caret Line="62" Column="36" TopLine="46"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="121" Column="21" TopLine="111"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\packages\fcl-stl\src\glinkedlist.pp"/>
+        <Caret Line="86" Column="14" TopLine="81"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="178" Column="70" TopLine="168"/>
       </Position>
     </JumpHistory>
     <RunParams>

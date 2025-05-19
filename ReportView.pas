@@ -43,17 +43,23 @@ uses
 
 procedure ShowReport(storage: TRecordList);
 var
+  Header, underline: string;
   rec: TRecord;
   line: String;
   sorted: TRecordList;
 begin
+  header := 'Долг (дн.) | № билета | ' +
+            utf8padleft('Читатель', 20) + ' | ' +
+            utf8padleft('Автор', 20) + ' | Книга';
+  underline := utf8padleft('', length(header), '-');
+
   FormReport.Memo1.Clear;
   sorted := SortByDate(storage);
   // ShowMessage(sorted.Count.ToString);
 
   //FormReport.Memo1.Append('Книга Автор № билета Читатель Долг');
-  FormReport.Memo1.Append('Долг (дн.) | № билета | Читатель | Автор | Книга');
-  FormReport.Memo1.Append('------------------------------------------------');
+  FormReport.Memo1.Append(header);
+  FormReport.Memo1.Append(underline);
   for rec in sorted do
   begin
     {line := rec.name + ' ' + rec.author + ' ' + rec.cardID + ' ' +

@@ -1,7 +1,7 @@
 unit MainWindow;
 
 {$mode objfpc}{$H+}
-{$modeswitch nestedprocvars} // CSV
+{ $ m o d e s w i t c h nestedprocvars} // CSV
 
 interface
 
@@ -9,7 +9,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Grids, StdCtrls, Menus,
   ActnList, StdActns, ExtCtrls, DateTimePicker,
 
-  LCSVUtils, DateUtils,
+  DateUtils,
   DBRecord, ReportView;
 
 type
@@ -35,10 +35,11 @@ type
     MenuItem2: TMenuItem;
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
+    MenuItem5: TMenuItem;
     Panel1: TPanel;
     Panel2: TPanel;
     StringGrid: TStringGrid;
-    ToggleBox1: TToggleBox;
+    ToggleBox1: TButton;
     procedure Action1Execute(Sender: TObject);
     procedure ButtonAddClick(Sender: TObject);
     procedure ButtonDeleteClick(Sender: TObject);
@@ -52,8 +53,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure StringGridCompareCells(Sender: TObject; ACol, ARow, BCol,
       BRow: Integer; var Result: integer);
-    procedure StringGridHeaderSized(Sender: TObject; IsColumn: Boolean;
-      Index: Integer);
+    //procedure StringGridHeaderSized(Sender: TObject; IsColumn: Boolean;
+      //Index: Integer);
     procedure StringGridResize(Sender: TObject);
     procedure ToggleBox1Change(Sender: TObject);
 
@@ -70,11 +71,10 @@ implementation
 
 type
   DBColumn = (colID = 0, colTitle, colAuthor, colCard, colReader, colDate);
-  StoredFields = (fTitle = 0, fAuthor, fCard, fReader, fDate);
 
 var
   PEditedRecord: PItem;
-  SearchMode: Boolean;
+  //SearchMode: Boolean;
   storage: TRecordList;
   filtered: TRecordList;
 
@@ -87,7 +87,7 @@ begin
   storage := TRecordList.Create;
   filtered := TRecordList.Create;
   PEditedRecord := nil;
-  SearchMode := false;
+  //SearchMode := false;
 end;
 
 procedure TFormMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -120,6 +120,7 @@ begin
     result := -result;
 end;
 
+{
 procedure TFormMain.StringGridHeaderSized(Sender: TObject; IsColumn: Boolean;
   Index: Integer);
 var
@@ -139,6 +140,7 @@ begin
     MaxWidth := MinWidth;
   end;
 end;
+}
 
 procedure TFormMain.StringGridResize(Sender: TObject);
 begin
@@ -163,7 +165,7 @@ begin
     with FormMain.StringGrid do
       RowCount := RowCount + 1;
 
-    FormMain.StringGrid.Rows[i][ord(colID)] := i.tostring;
+    FormMain.StringGrid.Rows[i][ord(colID)] := rec.recordID.tostring;
     FormMain.StringGrid.Rows[i][ord(colTitle)] := rec.name;
     FormMain.StringGrid.Rows[i][ord(colAuthor)] := rec.author;
     FormMain.StringGrid.Rows[i][ord(colCard)] := rec.cardID;
@@ -173,16 +175,22 @@ begin
     inc(i);
   end;
 
+  with FormMain.StringGrid do
+    if SortColumn <> -1 then SortColRow(true, FormMain.StringGrid.SortColumn);
+
   FormMain.StringGrid.Row := OldRow;
 end;
 
 function SelectedRecord: TRecordList.PItem;
 begin
-  result := GetItem(storage, FormMain.StringGrid.Row);
+  with FormMain.StringGrid do
+    result := GetItem(storage, Rows[Row][Ord(colID)].toInteger);
+  //result := GetItem(storage, FormMain.StringGrid.Row);
 end;
 
 function RecordFromInput: TRecord;
 begin
+  result.recordID := 0;
   result.name := FormMain.Edit1.Text;
   result.author := FormMain.Edit2.Text;
   result.cardID := FormMain.Edit3.Text;
@@ -317,6 +325,8 @@ begin
   ExitEditMode;
 end;
 
+//function RecordFromRow
+
 function FilterRec(rec: TRecord): Boolean;
 var
   //edit: TEdit;
@@ -352,6 +362,7 @@ end;
 procedure TFormMain.ToggleBox1Change(Sender: TObject);
 var
   rec: TRecord;
+  i: integer;
 begin
   //SearchMode := ToggleBox1.Checked;
   //Filter := RecordFromInput;
@@ -360,19 +371,11 @@ begin
     if FilterRec(rec) then
       filtered.InsertLast(rec);
   redisplay(filtered);
-end;
-
-procedure LoadRecord(Fields: TStringList);
-var
-  x: TRecord;
-begin
-  x.name := Fields[Ord(fTitle)];
-  x.author := Fields[Ord(fAuthor)];
-  x.cardID := Fields[Ord(fCard)];
-  x.reader := Fields[Ord(fReader)];
-  x.returndate := strtodate(Fields[Ord(fDate)]);
-  //x.returndate := ;
-  storage.InsertLast(x);
+  //redisplay(storage);
+  //for row in FormMain.StringGrid do
+  {for i := 1 to storage.Count do
+    if not FilterRec( GetItem(storage, i)^.data ) then
+      FormMain.StringGrid.DeleteRow(  );}
 end;
 
 procedure TFormMain.FileOpen1Accept(Sender: TObject);
@@ -390,7 +393,11 @@ begin
   storage.Clear;
   with FileOpen1.Dialog do
     if FileName.EndsWith('.TXT', true) or FileName.EndsWith('.CSV', true) then
-      LoadFromCSVFile(FileName, @LoadRecord)
+    begin
+      //LoadFromCSVFile(storage, FileName)
+      storage.free;
+      storage := CSVToList(FileName);
+    end
     else
       LoadFromBinaryFile(storage, filename);
   redisplay(storage);

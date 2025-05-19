@@ -1,15 +1,18 @@
 unit DBRecord;
 
 {$mode ObjFPC}{$H+}
+{$ModeSwitch nestedprocvars}
 
 interface
 
 uses
   Classes, SysUtils,
-  GLinkedList, DateUtils;
+  GLinkedList, DateUtils,
+  LCSVUtils;
 
 type
   TRecord = record
+    recordID: integer;
     author: string[255];
     name: string[255];
     cardID: string[64];
@@ -21,13 +24,20 @@ type
   end;
   TRecordList = specialize TLinkedList<TRecord>;
   PItem = TRecordList.PItem;
+  StoredFields = (fTitle = 0, fAuthor, fCard, fReader, fDate);
 
 function GetItem(List: TRecordList; idx: integer): TRecordList.PItem;
 function SortByDate(List: TRecordList): TRecordList;
 procedure SaveToBinaryFile(storage: TRecordList; filename: string);
 procedure LoadFromBinaryFile(storage: TRecordList; FileName: String);
+//procedure LoadFromCSVFile(storage: TRecordList; filename: string);
+function CSVToList(filename: string): TRecordList;
+
 
 implementation
+
+var
+  temp: TRecordList;
 
 function GetItem(List: TRecordList; idx: integer): TRecordList.PItem;
 var
@@ -50,7 +60,7 @@ end;
 function MinByDate(List: TRecordList): TRecordList.PItem;
 var
   tempmin, cur: TRecordList.PItem;
-  rec: TRecord;
+  //rec: TRecord;
 begin
   cur := List.First;
   tempmin := List.First;
@@ -104,22 +114,66 @@ begin
   end;
 end;
 
+procedure RenumberList(List: TRecordList);
+var
+  cur: PItem;
+  i: integer;
+begin
+  if List.Count = 0 then exit;
+  cur := List.First;
+  i := 1;
+  while cur <> nil do
+  begin
+    cur^.data.recordID := i;
+    inc(i);
+    cur := cur^.next;
+  end;
+end;
+
 procedure LoadFromBinaryFile(storage: TRecordList; FileName: String);
 var
   f: file of TRecord;
   rec: TRecord;
+  i: integer;
 begin
   AssignFile(f, filename);
   Reset(f);
   try
+    i := 1;
     while not EOF(f) do
     begin
       read(f, rec);
+      rec.recordID := i;
       storage.InsertLast(rec);
+      inc(i);
     end;
   finally
     CloseFile(f);
   end;
+end;
+
+
+procedure LoadRecord(Fields: TStringList);
+var
+  x: TRecord;
+begin
+  x.name := Fields[Ord(fTitle)];
+  x.author := Fields[Ord(fAuthor)];
+  x.cardID := Fields[Ord(fCard)];
+  x.reader := Fields[Ord(fReader)];
+  x.returndate := strtodate(Fields[Ord(fDate)]);
+  //x.returndate := ;
+  temp.InsertLast(x);
+end;
+
+function CSVToList(filename: string): TRecordList;
+begin
+  //temp.free;
+  temp := TRecordList.Create;  // Новая ссылка
+  //result.create;
+  LCSVUtils.LoadFromCSVFile(FileName, @LoadRecord);
+  RenumberList(temp);
+  result := temp;
 end;
 
 end.

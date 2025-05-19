@@ -41,12 +41,11 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="mainwindow.pas"/>
+        <Filename Value="MainWindow.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FormMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="MainWindow"/>
       </Unit>
       <Unit>
         <Filename Value="linkedlists.pas"/>
@@ -54,17 +53,15 @@
         <UnitName Value="LinkedLists"/>
       </Unit>
       <Unit>
-        <Filename Value="dbrecord.pas"/>
+        <Filename Value="DBRecord.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="DBRecord"/>
       </Unit>
       <Unit>
-        <Filename Value="reportview.pas"/>
+        <Filename Value="ReportView.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FormReport"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="ReportView"/>
       </Unit>
     </Units>
   </ProjectOptions>
