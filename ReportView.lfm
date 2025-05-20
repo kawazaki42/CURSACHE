@@ -6,7 +6,7 @@ object FormReport: TFormReport
   Caption = 'Отчет'
   ClientHeight = 240
   ClientWidth = 320
-  LCLVersion = '3.8.0.0'
+  LCLVersion = '2.2.0.4'
   object Memo1: TMemo
     Left = 0
     Height = 202
@@ -30,8 +30,8 @@ object FormReport: TFormReport
     Anchors = [akRight, akBottom]
     Caption = 'В&ыход'
     Default = True
-    TabOrder = 1
     OnClick = Button1Click
+    TabOrder = 1
   end
   object Button2: TButton
     Left = 8

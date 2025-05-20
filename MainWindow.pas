@@ -9,7 +9,7 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Grids, StdCtrls, Menus,
   ActnList, StdActns, ExtCtrls, DateTimePicker,
 
-  DateUtils,
+  DateUtils, Math,
   DBRecord, ReportView;
 
 type
@@ -46,7 +46,6 @@ type
     procedure ButtonToggleEditClick(Sender: TObject);
     procedure ButtonDupClick(Sender: TObject);
     procedure ButtonEditSaveClick(Sender: TObject);
-    procedure Button6Click(Sender: TObject);
     procedure FileOpen1Accept(Sender: TObject);
     procedure FileSaveAs1Accept(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -72,11 +71,15 @@ implementation
 type
   DBColumn = (colID = 0, colTitle, colAuthor, colCard, colReader, colDate);
 
+//const
+//  ColToField: array[DBColumn] of StoredFields = [];
+
 var
   PEditedRecord: PItem;
   //SearchMode: Boolean;
   storage: TRecordList;
   filtered: TRecordList;
+
 
 {$R *.lfm}
 
@@ -96,14 +99,38 @@ begin
   filtered.free;
 end;
 
+function CompareByCol(a, b: TRecord; key: DBColumn): Integer;
+const
+  ColToField: array[DBColumn] of StoredFields = (fTitle, fTitle, fAuthor, fCard, fReader, fDate);
+var
+  tmp: integer;
+begin
+  if key = colID then
+  begin
+    result := sign(a.recordID - b.recordID);
+    exit;
+  end;
+
+  result := CompareBy(a, b, ColToField[key]);
+
+end;
+
 procedure TFormMain.StringGridCompareCells(Sender: TObject; ACol, ARow, BCol,
   BRow: Integer; var Result: integer);
 var
   a, b: TDateTime;
   astr, bstr: string;
+  aID, bID: integer;
 begin
   result := 0;
-  astr := StringGrid.cells[ACol, ARow];
+
+  aID := StringGrid.rows[ARow][Ord(colID)].toInteger;
+  bID := StringGrid.rows[BRow][Ord(colID)].toInteger;
+
+  //result := CompareBy(ItemByID(storage, aID)^.data, ItemByID(storage, bID)^.data, StoredFields(ACol));
+  result := CompareByCol(ItemByID(storage, aID)^.data, ItemByID(storage, bID)^.data, DBColumn(ACol));
+
+  {astr := StringGrid.cells[ACol, ARow];
   bstr := StringGrid.cells[BCol, BRow];
   if (acol = Ord(colDate)) and (bcol = Ord(colDate)) then
   begin
@@ -117,7 +144,7 @@ begin
     result := AnsiCompareText(astr, bstr);
   end;
   if StringGrid.SortOrder = soDescending then
-    result := -result;
+    result := -result;}
 end;
 
 {
@@ -175,17 +202,34 @@ begin
     inc(i);
   end;
 
-  with FormMain.StringGrid do
-    if SortColumn <> -1 then SortColRow(true, FormMain.StringGrid.SortColumn);
+  {with FormMain.StringGrid do
+    if SortColumn <> -1 then SortColRow(true, FormMain.StringGrid.SortColumn);}
 
   FormMain.StringGrid.Row := OldRow;
 end;
 
 function SelectedRecord: TRecordList.PItem;
+var
+  i: integer;
+  cur: PItem;
 begin
-  with FormMain.StringGrid do
-    result := GetItem(storage, Rows[Row][Ord(colID)].toInteger);
+  //with FormMain.StringGrid do
+    //result := GetItem(storage, Rows[Row][Ord(colID)].toInteger);
   //result := GetItem(storage, FormMain.StringGrid.Row);
+  //for i := 1 to Rows[Row][Ord(colID)].toInteger do
+  with FormMain.StringGrid do
+    i := Rows[Row][Ord(colID)].toInteger;
+  cur := storage.First;
+  while cur <> nil do
+  begin
+    if cur^.Data.recordID = i then
+    begin
+      result := cur;
+      exit;
+    end;
+    cur := cur^.Next;
+  end;
+
 end;
 
 function RecordFromInput: TRecord;
@@ -219,6 +263,7 @@ begin
     ButtonEditSaveClick(self)
   else
     storage.InsertLast( RecordFromInput );
+  RenumberList(storage);
   redisplay(storage);
   ClearInput;
 end;
@@ -317,11 +362,6 @@ begin
   PEditedRecord^.data := RecordFromInput;
   redisplay(storage);
   //ButtonEditSave.Enabled := false;
-  ExitEditMode;
-end;
-
-procedure TFormMain.Button6Click(Sender: TObject);
-begin
   ExitEditMode;
 end;
 

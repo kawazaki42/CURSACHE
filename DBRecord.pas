@@ -32,6 +32,9 @@ procedure SaveToBinaryFile(storage: TRecordList; filename: string);
 procedure LoadFromBinaryFile(storage: TRecordList; FileName: String);
 //procedure LoadFromCSVFile(storage: TRecordList; filename: string);
 function CSVToList(filename: string): TRecordList;
+procedure RenumberList(List: TRecordList);
+function CompareBy(a, b: TRecord; Key: StoredFields): Integer;
+function ItemByID(List: TRecordList; ID: integer): PItem;
 
 
 implementation
@@ -57,6 +60,20 @@ begin
   end;}
 end;
 
+function ItemByID(List: TRecordList; ID: integer): PItem;
+var
+  cur: PItem;
+begin
+  cur := List.First;
+  while cur <> nil do
+  begin
+    if cur^.Data.recordID = ID then
+      break;
+    cur := cur^.next;
+  end;
+  result := cur;
+end;
+
 function MinByDate(List: TRecordList): TRecordList.PItem;
 var
   tempmin, cur: TRecordList.PItem;
@@ -72,6 +89,52 @@ begin
     cur := cur^.Next;
   end;
   result := tempmin
+end;
+
+function CompareBy(a, b: TRecord; Key: StoredFields): Integer;
+begin
+  case Key of
+    fTitle:  result := AnsiCompareText(a.name, b.name);
+    fAuthor: result := AnsiCompareText(a.author, b.author);
+    fCard:   result := AnsiCompareText(a.cardID, b.cardID);
+    fReader: result := AnsiCompareText(a.reader, b.reader);
+    fDate:   result := CompareDate(a.returndate, b.returndate);
+  end;
+end;
+
+function MinBy(List: TRecordList; Key: StoredFields): PItem;
+var
+  tempmin, cur: TRecordList.PItem;
+  a, b: TRecord;
+  diff: Integer;
+begin
+  cur := List.First;
+  tempmin := cur;
+  while cur <> nil do
+  begin
+    a := cur^.data;
+    b := tempmin^.data;
+    //if Key = fDate then
+    //begin
+    //  if CompareDate(cur^.data.returndate, tempmin^.data.returndate) < 0 then
+    //    tempmin := cur
+    //end else
+    //begin
+      //with cur^.data do
+      case Key of
+        fTitle:  diff := AnsiCompareText(a.name, b.name);
+        fAuthor: diff := AnsiCompareText(a.author, b.author);
+        fCard:   diff := AnsiCompareText(a.cardID, b.cardID);
+        fReader: diff := AnsiCompareText(a.reader, b.reader);
+        fDate:   diff := CompareDate(a.returndate, b.returndate);
+      end;
+      if diff < 0 then
+        tempmin := cur;
+    //end;
+
+    cur := cur^.Next;
+  end;
+  result := tempmin;
 end;
 
 function SortByDate(List: TRecordList): TRecordList;
@@ -97,6 +160,26 @@ begin
   end;
   assert(unsorted.Count = 0);
   unsorted.free;
+end;
+
+procedure SortBy(var List: TRecordList; Key: StoredFields);
+var
+  result: TRecordList;
+  min: PItem;
+begin
+  if List.Count = 0 then exit;
+  result := TRecordList.Create;
+
+  while List.Count <> 0 do
+  begin
+    min := MinBy(List, Key);
+    result.InsertLast(min^.data);
+    List.Delete(min);
+  end;
+
+  assert(List.Count = 0);
+  List.Free;
+  List := result;
 end;
 
 procedure SaveToBinaryFile(storage: TRecordList; filename: string);

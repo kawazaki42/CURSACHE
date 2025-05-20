@@ -10,7 +10,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="5"/>
         <CursorPos Y="25"/>
-        <UsageCount Value="55"/>
+        <UsageCount Value="58"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -20,9 +20,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="190"/>
-        <CursorPos X="23" Y="193"/>
-        <UsageCount Value="55"/>
+        <TopLine Value="110"/>
+        <CursorPos X="99" Y="131"/>
+        <UsageCount Value="58"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -32,15 +32,15 @@
         <UnitName Value="LinkedLists"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="24" Y="11"/>
-        <UsageCount Value="55"/>
+        <UsageCount Value="58"/>
       </Unit>
       <Unit>
         <Filename Value="DBRecord.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="119"/>
-        <CursorPos X="19" Y="125"/>
-        <UsageCount Value="55"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="20"/>
+        <CursorPos X="58" Y="37"/>
+        <UsageCount Value="58"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -49,10 +49,10 @@
         <ComponentName Value="FormReport"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="49"/>
-        <CursorPos X="53" Y="54"/>
-        <UsageCount Value="31"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="46"/>
+        <CursorPos X="7" Y="69"/>
+        <UsageCount Value="34"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -74,7 +74,7 @@
         <EditorIndex Value="6"/>
         <TopLine Value="44"/>
         <CursorPos X="36" Y="86"/>
-        <UsageCount Value="19"/>
+        <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -168,10 +168,9 @@
       <Unit>
         <Filename Value="C:\lazarus\lcl\grids.pas"/>
         <UnitName Value="Grids"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="5520"/>
+        <EditorIndex Value="2"/>
         <CursorPos X="35" Y="5525"/>
-        <UsageCount Value="16"/>
+        <UsageCount Value="17"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -214,11 +213,10 @@
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\components\lazutils\lcsvutils.pas"/>
-        <UnitName Value="LCSVUtils"/>
         <EditorIndex Value="4"/>
         <TopLine Value="18"/>
         <CursorPos X="3" Y="20"/>
-        <UsageCount Value="12"/>
+        <UsageCount Value="13"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -310,111 +308,7 @@
         <UsageCount Value="11"/>
       </Unit>
     </Units>
-    <JumpHistory HistoryIndex="28">
-      <Position>
-        <Filename Value="mainwindow.pas"/>
-        <Caret Line="72" Column="22" TopLine="64"/>
-      </Position>
-      <Position>
-        <Filename Value="mainwindow.pas"/>
-        <Caret Line="371" Column="41" TopLine="367"/>
-      </Position>
-      <Position>
-        <Filename Value="mainwindow.pas"/>
-        <Caret Line="166" Column="49" TopLine="158"/>
-      </Position>
-      <Position>
-        <Filename Value="MainWindow.pas"/>
-        <Caret Line="380" Column="32" TopLine="375"/>
-      </Position>
-      <Position>
-        <Filename Value="DBRecord.pas"/>
-        <Caret Line="25" Column="63" TopLine="13"/>
-      </Position>
-      <Position>
-        <Filename Value="DBRecord.pas"/>
-        <Caret Line="148" Column="28" TopLine="137"/>
-      </Position>
-      <Position>
-        <Filename Value="C:\lazarus\components\lazutils\lcsvutils.pas"/>
-        <Caret Line="25" Column="13" TopLine="18"/>
-      </Position>
-      <Position>
-        <Filename Value="DBRecord.pas"/>
-        <Caret Line="148" Column="5" TopLine="138"/>
-      </Position>
-      <Position>
-        <Filename Value="DBRecord.pas"/>
-        <Caret Line="142" Column="9" TopLine="137"/>
-      </Position>
-      <Position>
-        <Filename Value="DBRecord.pas"/>
-        <Caret Line="153" Column="18" TopLine="143"/>
-      </Position>
-      <Position>
-        <Filename Value="DBRecord.pas"/>
-        <Caret Line="145" Column="50" TopLine="138"/>
-      </Position>
-      <Position>
-        <Filename Value="DBRecord.pas"/>
-        <Caret Line="10" Column="17"/>
-      </Position>
-      <Position>
-        <Filename Value="DBRecord.pas"/>
-        <Caret Line="4" Column="29"/>
-      </Position>
-      <Position>
-        <Filename Value="DBRecord.pas"/>
-        <Caret Line="33" Column="51" TopLine="28"/>
-      </Position>
-      <Position>
-        <Filename Value="MainWindow.pas"/>
-        <Caret Line="381" Column="36" TopLine="375"/>
-      </Position>
-      <Position>
-        <Filename Value="MainWindow.pas"/>
-        <Caret Line="12" Column="3" TopLine="53"/>
-      </Position>
-      <Position>
-        <Filename Value="MainWindow.pas"/>
-        <Caret Line="185" Column="5" TopLine="174"/>
-      </Position>
-      <Position>
-        <Filename Value="MainWindow.pas"/>
-        <Caret Line="90" Column="5" TopLine="83"/>
-      </Position>
-      <Position>
-        <Filename Value="MainWindow.pas"/>
-        <Caret Line="184" Column="63" TopLine="177"/>
-      </Position>
-      <Position>
-        <Filename Value="MainWindow.pas"/>
-        <Caret Line="151" Column="21" TopLine="121"/>
-      </Position>
-      <Position>
-        <Filename Value="MainWindow.pas"/>
-        <Caret Line="373" Column="38" TopLine="347"/>
-      </Position>
-      <Position>
-        <Filename Value="MainWindow.pas"/>
-        <Caret Line="361" Column="14" TopLine="357"/>
-      </Position>
-      <Position>
-        <Filename Value="MainWindow.pas"/>
-        <Caret Line="373" Column="48" TopLine="363"/>
-      </Position>
-      <Position>
-        <Filename Value="ReportView.pas"/>
-        <Caret Line="57" Column="33" TopLine="53"/>
-      </Position>
-      <Position>
-        <Filename Value="ReportView.pas"/>
-        <Caret Line="46" Column="17" TopLine="39"/>
-      </Position>
-      <Position>
-        <Filename Value="ReportView.pas"/>
-        <Caret Line="62" Column="36" TopLine="46"/>
-      </Position>
+    <JumpHistory HistoryIndex="29">
       <Position>
         <Filename Value="DBRecord.pas"/>
         <Caret Line="121" Column="21" TopLine="111"/>
@@ -426,6 +320,114 @@
       <Position>
         <Filename Value="MainWindow.pas"/>
         <Caret Line="178" Column="70" TopLine="168"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="222" Column="23" TopLine="202"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="200" Column="12" TopLine="184"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="193" Column="32" TopLine="181"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="340" TopLine="328"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="385" Column="6" TopLine="370"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="121" Column="18" TopLine="101"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="110" Column="32" TopLine="99"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="108" Column="14" TopLine="86"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="86" Column="21" TopLine="64"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="89" Column="22" TopLine="67"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="93" Column="9" TopLine="70"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="90" Column="23" TopLine="73"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="99" Column="18" TopLine="83"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="104" Column="65" TopLine="87"/>
+      </Position>
+      <Position>
+        <Filename Value="ReportView.pas"/>
+        <Caret Line="58" Column="20" TopLine="52"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="80" Column="46" TopLine="73"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="385" Column="6" TopLine="384"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="69" Column="21" TopLine="56"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="73" Column="17" TopLine="56"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="37" Column="58" TopLine="20"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="110" Column="88" TopLine="98"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="75" Column="10" TopLine="212"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="108" Column="28" TopLine="99"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="109" Column="10" TopLine="99"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="114" Column="43" TopLine="99"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="104" Column="56" TopLine="92"/>
+      </Position>
+      <Position>
+        <Filename Value="MainWindow.pas"/>
+        <Caret Line="131" Column="86" TopLine="111"/>
       </Position>
     </JumpHistory>
     <RunParams>

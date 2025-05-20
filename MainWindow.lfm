@@ -9,7 +9,6 @@ object FormMain: TFormMain
   Menu = MainMenu1
   OnClose = FormClose
   OnCreate = FormCreate
-  LCLVersion = '3.8.0.0'
   object StringGrid: TStringGrid
     Left = 0
     Height = 120
@@ -33,7 +32,6 @@ object FormMain: TFormMain
         Width = 100
       end    
       item
-        MaxSize = 200
         ReadOnly = True
         SizePriority = 0
         Title.Caption = 'Автор'
@@ -47,7 +45,6 @@ object FormMain: TFormMain
         Width = 64
       end    
       item
-        MaxSize = 200
         ReadOnly = True
         SizePriority = 0
         Title.Caption = 'Читатель'
@@ -80,7 +77,7 @@ object FormMain: TFormMain
     AnchorSideTop.Control = StringGrid
     AnchorSideTop.Side = asrBottom
     Left = 0
-    Height = 25
+    Height = 24
     Top = 120
     Width = 359
     Anchors = [akTop, akLeft, akRight]
@@ -88,23 +85,23 @@ object FormMain: TFormMain
     ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
     ChildSizing.ShrinkHorizontal = crsScaleChilds
     ChildSizing.Layout = cclTopToBottomThenLeftToRight
-    ClientHeight = 25
+    ClientHeight = 24
     ClientWidth = 359
     TabOrder = 1
     object Edit1: TEdit
-      Left = 1
+      Left = 0
       Height = 23
-      Top = 1
+      Top = 0
       Width = 100
       Constraints.MinWidth = 100
       TabOrder = 0
       TextHint = 'Книга'
     end
     object Edit2: TEdit
-      Left = 101
+      Left = 100
       Height = 23
-      Top = 1
-      Width = 64
+      Top = 0
+      Width = 65
       Constraints.MaxWidth = 150
       TabOrder = 1
       TextHint = 'Автор'
@@ -113,17 +110,17 @@ object FormMain: TFormMain
       AnchorSideRight.Side = asrBottom
       Left = 165
       Height = 23
-      Top = 1
-      Width = 64
+      Top = 0
+      Width = 65
       Constraints.MaxWidth = 150
       TabOrder = 2
       TextHint = '№ билета'
     end
     object Edit4: TEdit
       AnchorSideRight.Side = asrBottom
-      Left = 229
+      Left = 230
       Height = 23
-      Top = 1
+      Top = 0
       Width = 65
       Constraints.MaxWidth = 150
       TabOrder = 3
@@ -131,9 +128,9 @@ object FormMain: TFormMain
     end
     object DateTimePicker1: TDateTimePicker
       AnchorSideRight.Side = asrBottom
-      Left = 294
+      Left = 295
       Height = 23
-      Top = 1
+      Top = 0
       Width = 64
       CenturyFrom = 1941
       MaxDate = 2958465
@@ -159,7 +156,7 @@ object FormMain: TFormMain
     AnchorSideTop.Side = asrBottom
     Left = 0
     Height = 32
-    Top = 153
+    Top = 152
     Width = 361
     BorderSpacing.Top = 8
     ChildSizing.Layout = cclTopToBottomThenLeftToRight
@@ -167,41 +164,42 @@ object FormMain: TFormMain
     ClientWidth = 361
     TabOrder = 2
     object ButtonAdd: TButton
-      Left = 1
+      Left = 0
       Height = 25
-      Top = 1
-      Width = 78
+      Top = 0
+      Width = 85
       Caption = 'Добавить'
-      TabOrder = 0
+      Constraints.MinWidth = 85
       OnClick = ButtonAddClick
+      TabOrder = 0
     end
     object ButtonToggleEdit: TButton
-      Left = 79
+      Left = 85
       Height = 25
-      Top = 1
+      Top = 0
       Width = 106
       Caption = 'Редактировать'
       Constraints.MinWidth = 106
-      TabOrder = 1
       OnClick = ButtonToggleEditClick
+      TabOrder = 1
     end
     object ButtonDup: TButton
-      Left = 185
+      Left = 191
       Height = 25
-      Top = 1
+      Top = 0
       Width = 98
       Caption = 'Дублировать'
-      TabOrder = 2
       OnClick = ButtonDupClick
+      TabOrder = 2
     end
     object ButtonDelete: TButton
-      Left = 283
+      Left = 289
       Height = 25
-      Top = 1
+      Top = 0
       Width = 70
       Caption = 'Удалить'
-      TabOrder = 3
       OnClick = ButtonDeleteClick
+      TabOrder = 3
     end
   end
   object ToggleBox1: TButton
@@ -211,8 +209,8 @@ object FormMain: TFormMain
     Width = 75
     Anchors = [akLeft, akBottom]
     Caption = 'Поиск'
-    TabOrder = 3
     OnClick = ToggleBox1Change
+    TabOrder = 3
   end
   object MainMenu1: TMainMenu
     Left = 8

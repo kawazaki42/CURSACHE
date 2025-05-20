@@ -44,14 +44,16 @@ uses
 procedure ShowReport(storage: TRecordList);
 var
   Header, underline: string;
+  ndays: integer;
   rec: TRecord;
   line: String;
   sorted: TRecordList;
 begin
-  header := 'Долг (дн.) | № билета | ' +
+  header := 'Дней до сдачи | № билета | ' +
             utf8padleft('Читатель', 20) + ' | ' +
             utf8padleft('Автор', 20) + ' | Книга';
   underline := utf8padleft('', length(header), '-');
+
 
   FormReport.Memo1.Clear;
   sorted := SortByDate(storage);
@@ -62,11 +64,14 @@ begin
   FormReport.Memo1.Append(underline);
   for rec in sorted do
   begin
+    ndays := DaysBetween(rec.returndate, today);
+    if CompareDate(rec.returndate, today) < 0 then
+      ndays := -ndays;
     {line := rec.name + ' ' + rec.author + ' ' + rec.cardID + ' ' +
             rec.reader + ' ' +
             DaysBetween(rec.returndate, today).toString;}
-    line := format('%10d | %s | %s | %s | %s', [
-      DaysBetween(rec.returndate, today), //.toString.format + ' | ' +
+    line := format('%13d | %s | %s | %s | %s', [
+      ndays, //.toString.format + ' | ' +
       utf8padleft(rec.cardID, 8), //+ ' | ' +
       utf8padleft(rec.reader, 20), //+ ' | ' +
       utf8padleft(rec.author, 20), //+ ' | ' +
