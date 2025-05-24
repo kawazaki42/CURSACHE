@@ -27,18 +27,28 @@ type
   // Сохраняемые в файл поля записи
   TStoredFields = (fTitle = 0, fAuthor, fCard, fReader, fDate);
 
-function GetItem(List: TRecordList; idx: integer): TRecordList.PItem; 
+// Получить элемент списка по индексу (начиная с 1)
+function GetItem(List: TRecordList; idx: integer): TRecordList.PItem;
+// Получить элемент списка по ID записи
 function ItemByID(List: TRecordList; ID: integer): PItem;
 
-function CompareBy(a, b: TRecord; Key: TStoredFields): Integer;  
-function MinBy(List: TRecordList; Key: TStoredFields): PItem; 
+// Сравнить две записи по полю
+function CompareBy(a, b: TRecord; Key: TStoredFields): Integer;
+// Минимальный элемент списка по полю
+function MinBy(List: TRecordList; Key: TStoredFields): PItem;
+// Сортировать список по полю
 procedure SortBy(var List: TRecordList; Key: TStoredFields);
 
+// Присвоить записям иденитификаторы в соответствии с положением в списке
 procedure RenumberList(List: TRecordList);
 
+// Сохранить список в двоичный (типизированный) файл
 procedure SaveToBinaryFile(storage: TRecordList; filename: string);
+// Загрузить список из двоичного (типизированного) файла
 procedure LoadFromBinaryFile(storage: TRecordList; FileName: String);
+// Получить список из текстового (CSV) файла
 function CSVToList(filename: string): TRecordList;
+// Сохраить список в текстовый (CSV) файл
 procedure ListToCSV(List: TRecordList; FileName: String);
 
 
@@ -132,6 +142,7 @@ begin
   List := result;
 end;
 
+// Присвоить записям иденитификаторы в соответствии с положением в списке
 procedure RenumberList(List: TRecordList);
 var
   cur: PItem;
