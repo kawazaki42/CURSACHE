@@ -1,7 +1,7 @@
+// Главное окно программы
 unit MainWindow;
 
 {$mode objfpc}{$H+}
-{ $ m o d e s w i t c h nestedprocvars} // CSV
 
 interface
 
@@ -9,7 +9,8 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Grids, StdCtrls, Menus,
   ActnList, StdActns, ExtCtrls, DateTimePicker,
 
-  DateUtils, Math,
+  DateUtils,
+  Math,  // sign
   DBRecord, ReportView;
 
 type
@@ -17,45 +18,52 @@ type
   { TFormMain }
 
   TFormMain = class(TForm)
-    Action1: TAction;
-    ActionList1: TActionList;
+    // "Список действий"
+    ActionList: TActionList;
+
+    ActionSaveRecord: TAction;
+    ActionReport: TAction;
+    FileOpen: TFileOpen;
+    FileSaveAs: TFileSaveAs;
+
+    EditTitle: TEdit;
+    EditAuthor: TEdit;
+    EditCard: TEdit;
+    EditReader: TEdit;
+    DateReturn: TDateTimePicker;
+
     ButtonAdd: TButton;
     ButtonDelete: TButton;
     ButtonToggleEdit: TButton;
     ButtonDup: TButton;
-    DateTimePicker1: TDateTimePicker;
-    Edit1: TEdit;
-    Edit2: TEdit;
-    Edit3: TEdit;
-    Edit4: TEdit;
-    FileOpen1: TFileOpen;
-    FileSaveAs1: TFileSaveAs;
-    MainMenu1: TMainMenu;
-    MenuItem1: TMenuItem;
-    MenuItem2: TMenuItem;
-    MenuItem3: TMenuItem;
-    MenuItem4: TMenuItem;
-    MenuItem5: TMenuItem;
-    Panel1: TPanel;
-    Panel2: TPanel;
+    ButtonSearch: TButton;
+
+    MainMenu: TMainMenu;
+    MenuFile: TMenuItem;
+    MenuFileOpen: TMenuItem;
+    MenuFileSaveAs: TMenuItem;
+    MenuService: TMenuItem;
+    MenuServiceReport: TMenuItem;
+
+    PanelRecord: TPanel;
+    PanelButtons: TPanel;
     StringGrid: TStringGrid;
-    ToggleBox1: TButton;
-    procedure Action1Execute(Sender: TObject);
+
+    procedure ActionReportExecute(Sender: TObject);
     procedure ButtonAddClick(Sender: TObject);
     procedure ButtonDeleteClick(Sender: TObject);
     procedure ButtonToggleEditClick(Sender: TObject);
     procedure ButtonDupClick(Sender: TObject);
     procedure ButtonEditSaveClick(Sender: TObject);
-    procedure FileOpen1Accept(Sender: TObject);
-    procedure FileSaveAs1Accept(Sender: TObject);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FileOpenAccept(Sender: TObject);
+    procedure FileSaveAsAccept(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure StringGridCompareCells(Sender: TObject; ACol, ARow, BCol,
       BRow: Integer; var Result: integer);
-    //procedure StringGridHeaderSized(Sender: TObject; IsColumn: Boolean;
-      //Index: Integer);
     procedure StringGridResize(Sender: TObject);
-    procedure ToggleBox1Change(Sender: TObject);
+    procedure ButtonSearchClick(Sender: TObject);
 
   private
 
@@ -69,15 +77,18 @@ var
 implementation
 
 type
-  DBColumn = (colID = 0, colTitle, colAuthor, colCard, colReader, colDate);
-
-//const
-//  ColToField: array[DBColumn] of StoredFields = [];
+  // Колонки таблицы.
+  // NOTE: отличаются от TStoredFields
+  TDBColumn = (colID = 0, colTitle, colAuthor, colCard, colReader, colDate);
 
 var
+  // Указатель на редактируемый элемент списка
+  // nil, если не в режиме редактирования
   PEditedRecord: PItem;
-  //SearchMode: Boolean;
+  // Общий список записей базы данных
   storage: TRecordList;
+  // Фильтрованый список базы данных
+  // nil если фильтры не активны
   filtered: TRecordList;
 
 
@@ -90,133 +101,111 @@ begin
   storage := TRecordList.Create;
   filtered := TRecordList.Create;
   PEditedRecord := nil;
-  //SearchMode := false;
-end;
 
-procedure TFormMain.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+  DateReturn.Date := Today;
+end; 
+
+procedure TFormMain.FormDestroy(Sender: TObject);
 begin
   storage.free;
   filtered.free;
 end;
 
-function CompareByCol(a, b: TRecord; key: DBColumn): Integer;
+// FIXME: не сразу разворачивается на весь экран
+procedure TFormMain.FormShow(Sender: TObject);
+begin
+  AutoSize := false;
+  AutoSize := true;
+end;
+
+// Сравнить две записи по определенном столбце.
+function CompareByCol(a, b: TRecord; key: TDBColumn): Integer;
 const
-  ColToField: array[DBColumn] of StoredFields = (fTitle, fTitle, fAuthor, fCard, fReader, fDate);
-var
-  tmp: integer;
+  // Получить поле записи по столбцу.
+  ColToField: array[TDBColumn] of TStoredFields = (TStoredFields(0), fTitle, fAuthor, fCard, fReader, fDate);
 begin
   if key = colID then
   begin
+    // Сравнить по ID
     result := sign(a.recordID - b.recordID);
     exit;
   end;
 
   result := CompareBy(a, b, ColToField[key]);
-
 end;
 
 procedure TFormMain.StringGridCompareCells(Sender: TObject; ACol, ARow, BCol,
   BRow: Integer; var Result: integer);
 var
-  a, b: TDateTime;
-  astr, bstr: string;
   aID, bID: integer;
 begin
   result := 0;
 
+  assert(ACol = BCol);
+
   aID := StringGrid.rows[ARow][Ord(colID)].toInteger;
   bID := StringGrid.rows[BRow][Ord(colID)].toInteger;
 
-  //result := CompareBy(ItemByID(storage, aID)^.data, ItemByID(storage, bID)^.data, StoredFields(ACol));
-  result := CompareByCol(ItemByID(storage, aID)^.data, ItemByID(storage, bID)^.data, DBColumn(ACol));
+  result := CompareByCol(ItemByID(storage, aID)^.Data,
+                         ItemByID(storage, bID)^.Data,
+                         TDBColumn(ACol));
 
-  {astr := StringGrid.cells[ACol, ARow];
-  bstr := StringGrid.cells[BCol, BRow];
-  if (acol = Ord(colDate)) and (bcol = Ord(colDate)) then
-  begin
-    //a := StrToDate(StringGrid.cells[ACol, ARow]);
-    //b := StrToDate(StringGrid.cells[BCol, BRow]);
-    if not trystrtodate(astr, a) then exit;
-    if not trystrtodate(bstr, b) then exit;
-    result := CompareDate(a, b);
-  end else
-  begin
-    result := AnsiCompareText(astr, bstr);
-  end;
+  // Результаты сортировки автоматически не обращаются
+  // по возрастанию/убыванию
   if StringGrid.SortOrder = soDescending then
-    result := -result;}
+    result := -result;
 end;
 
-{
-procedure TFormMain.StringGridHeaderSized(Sender: TObject; IsColumn: Boolean;
-  Index: Integer);
-var
-  e: TControl;
-begin
-  case index of
-    Ord(colTitle): e := edit1;
-    Ord(colAuthor): e := edit2;
-    Ord(colCard): e := edit3;
-    Ord(colReader): e := edit4;
-    Ord(colDate): e := DateTimePicker1;
-  end;
-  //e.width := StringGrid.ColWidths[index];
-  with e.Constraints do
-  begin
-    MinWidth := StringGrid.ColWidths[index];
-    MaxWidth := MinWidth;
-  end;
-end;
-}
-
+// Автоматитески изменить размер при изменении размера таблицы
 procedure TFormMain.StringGridResize(Sender: TObject);
 begin
   StringGrid.AutoFillColumns := true;
   StringGrid.AutoFillColumns := false;
 end;
 
+// Отобразить список в таблице
 procedure Redisplay(List: TRecordList);
 var
   rec: TRecord;
   i: integer;
   OldRow: integer;
 begin
-  //FormMain.stringgrid1.Clear;
+  // сохранить номер выделенной строки
   OldRow := FormMain.StringGrid.Row;
-
+                                        
+  //FormMain.stringgrid1.Clear;
   //FormMain.StringGrid1.Clean([gzNormal]);
+  // Начать с единственной строки - заголовка.
   FormMain.StringGrid.RowCount := 1;
   i := 1;
   for rec in List do
   begin
     with FormMain.StringGrid do
+    begin
       RowCount := RowCount + 1;
 
-    FormMain.StringGrid.Rows[i][ord(colID)] := rec.recordID.tostring;
-    FormMain.StringGrid.Rows[i][ord(colTitle)] := rec.name;
-    FormMain.StringGrid.Rows[i][ord(colAuthor)] := rec.author;
-    FormMain.StringGrid.Rows[i][ord(colCard)] := rec.cardID;
-    FormMain.StringGrid.Rows[i][ord(colReader)] := rec.reader;
-    FormMain.StringGrid.Rows[i][ord(colDate)] := datetostr(rec.returndate);
+      Rows[i][ord(colID)] := rec.recordID.toString;
+      Rows[i][ord(colTitle)] := rec.name;
+      Rows[i][ord(colAuthor)] := rec.author;
+      Rows[i][ord(colCard)] := rec.cardID;
+      Rows[i][ord(colReader)] := rec.reader;
+      Rows[i][ord(colDate)] := DateToStr(rec.returndate);
+    end;
 
     inc(i);
   end;
 
-  {with FormMain.StringGrid do
-    if SortColumn <> -1 then SortColRow(true, FormMain.StringGrid.SortColumn);}
-
+  // вернуть выделение
   FormMain.StringGrid.Row := OldRow;
 end;
 
+// Найти выделенную строку таблицы (по колонке ID)
 function SelectedRecord: TRecordList.PItem;
 var
   i: integer;
   cur: PItem;
 begin
-  //with FormMain.StringGrid do
-    //result := GetItem(storage, Rows[Row][Ord(colID)].toInteger);
-  //result := GetItem(storage, FormMain.StringGrid.Row);
-  //for i := 1 to Rows[Row][Ord(colID)].toInteger do
+  // Ищем по колонке ID
   with FormMain.StringGrid do
     i := Rows[Row][Ord(colID)].toInteger;
   cur := storage.First;
@@ -229,100 +218,86 @@ begin
     end;
     cur := cur^.Next;
   end;
-
 end;
 
+// Запись, заполненная полями ввода
 function RecordFromInput: TRecord;
 begin
   result.recordID := 0;
-  result.name := FormMain.Edit1.Text;
-  result.author := FormMain.Edit2.Text;
-  result.cardID := FormMain.Edit3.Text;
-  result.reader := FormMain.Edit4.Text;
-  result.returndate := FormMain.DateTimePicker1.date;
+  result.name := FormMain.EditTitle.Text;
+  result.author := FormMain.EditAuthor.Text;
+  result.cardID := FormMain.EditCard.Text;
+  result.reader := FormMain.EditReader.Text;
+  result.returndate := FormMain.DateReturn.date;
 end;
 
 procedure ClearInput;
 begin
-  FormMain.Edit1.Clear;
-  FormMain.Edit2.Clear;
-  FormMain.Edit3.Clear;
-  FormMain.Edit4.Clear;
-  FormMain.DateTimePicker1.date := today;
+  FormMain.EditTitle.Clear;
+  FormMain.EditAuthor.Clear;
+  FormMain.EditCard.Clear;
+  FormMain.EditReader.Clear;
+  FormMain.DateReturn.date := today;
 end;
 
 procedure TFormMain.ButtonAddClick(Sender: TObject);
 begin
-  //x.name := Edit1.Text;
-  //x.author := Edit2.Text;
-  //x.cardID := Edit3.Text;
-  //x.reader := Edit4.Text;
-  //x.returndate := DateTimePicker1.date;
-  //x.returndate := ;
-  if PEditedRecord <> nil then
+  if PEditedRecord <> nil then  // режим редактирования
     ButtonEditSaveClick(self)
   else
     storage.InsertLast( RecordFromInput );
-  RenumberList(storage);
-  redisplay(storage);
+  RenumberList(storage);  // NOTE: номера записей меняются
+                          //       в соответствии с их порядком в списке
+  Redisplay(storage);
   ClearInput;
 end;
 
-procedure TFormMain.Action1Execute(Sender: TObject);
+// Показать отчет
+procedure TFormMain.ActionReportExecute(Sender: TObject);
 begin
   FormReport.show;
   ShowReport(storage);
 end;
 
 procedure TFormMain.ButtonDeleteClick(Sender: TObject);
-{var
-  cur: TRecordList.PItem;
-  i, offset: integer;}
 begin
-  {cur := storage.First;
-  offset := StringGrid.row - 1;
-  for i := 1 to offset do
-    cur := cur^.next;}
+  // Защита от ошибки при пустом списке
   if storage.Count = 0 then exit;
 
-  storage.delete( SelectedRecord );
-  redisplay(storage);
+  storage.Delete( SelectedRecord );
+  RenumberList(storage);
+  Redisplay(storage);
 end;
 
+// Обновить поля при входе в режим редактирования
 procedure EnterEditMode;
 begin
-  //FormMain.ButtonEditSave.Enabled := true;
-  //FormMain.Button6.Enabled := true;
-
-  //FormMain.ButtonAdd.Enabled := false;
   FormMain.ButtonAdd.Caption := 'Сохранить';
   FormMain.ButtonToggleEdit.Caption := 'Отмена';
   FormMain.ButtonDelete.Enabled := false;
   FormMain.ButtonDup.Enabled := false;
+  FormMain.ButtonSearch.Enabled := false;
 end;
 
+// Обновить поля при выходе из режима редактирования
 procedure ExitEditMode;
 begin
   PEditedRecord := nil;
-  //FormMain./ButtonEditSave.Enabled := false;
-  //FormMain.button6.Enabled := false;
-
-  //FormMain.ButtonAdd.Enabled := true;
   FormMain.ButtonAdd.Caption := 'Добавить';
   FormMain.ButtonToggleEdit.Caption := 'Редактировать';
   FormMain.ButtonDelete.Enabled := true;
   FormMain.ButtonDup.Enabled := true;
+  FormMain.ButtonSearch.Enabled := true;
 end;
 
 
 // Переключить режим редактирования
 procedure TFormMain.ButtonToggleEditClick(Sender: TObject);
-//var
-  //item: TRecordList.PItem;
 begin
+  // Защита от ошибки при пустом списке
   if storage.Count = 0 then exit;
 
-  // Режим редактирования активен, отключить
+  // Режим редактирования активен, отменить
   if PEditedRecord <> nil then
   begin
     ExitEditMode;
@@ -330,58 +305,50 @@ begin
     exit;
   end;
 
+  // Выбрать запись для редактирования
   PEditedRecord := SelectedRecord;
-  Edit1.Text := PEditedRecord^.data.name;
-  Edit2.Text := PEditedRecord^.data.author;
-  Edit3.Text := PEditedRecord^.data.CardID;
-  Edit4.Text := PEditedRecord^.data.Reader;
-  DateTimePicker1.date := PEditedRecord^.data.returndate;
+
+  // Вставить в поля ввода
+  EditTitle.Text := PEditedRecord^.data.name;
+  EditAuthor.Text := PEditedRecord^.data.author;
+  EditCard.Text := PEditedRecord^.data.CardID;
+  EditReader.Text := PEditedRecord^.data.Reader;
+  DateReturn.date := PEditedRecord^.data.returndate;
+
   EnterEditMode;
-  {x.author := Edit2.Text;
-  x.cardID := Edit3.Text;
-  x.reader := Edit4.Text;
-  x.returndate := DateTimePicker1.date;}
-  //redisplay;
 end;
 
 procedure TFormMain.ButtonDupClick(Sender: TObject);
-//var
-//  OldRow: integer;
 begin
+  // Защита от ошибки при пустом списке
   if storage.Count = 0 then exit;
 
   SelectedRecord^.InsertAfter(SelectedRecord^.data);
-  //OldRow := StringGrid.Row;
-  redisplay(storage);
+  RenumberList(storage);
+  Redisplay(storage);
+  // Выделить новую запись
   StringGrid.Row := StringGrid.row + 1;
 end;
 
 procedure TFormMain.ButtonEditSaveClick(Sender: TObject);
 begin
+  // Если не в режиме редактирования
   if PEditedRecord = nil then exit;
+
   PEditedRecord^.data := RecordFromInput;
-  redisplay(storage);
-  //ButtonEditSave.Enabled := false;
+  RenumberList(storage);
+  Redisplay(storage);
   ExitEditMode;
 end;
 
-//function RecordFromRow
-
+// Соответствует ли запись критериям поиска?
 function FilterRec(rec: TRecord): Boolean;
 var
-  //edit: TEdit;
   Filter: TRecord;
 begin
   Filter := RecordFromInput;
   result := true;
-  //with FormMain.Edit1 do
-  {for edit in [FormMain.Edit1, FormMain.Edit2, FormMain.Edit3, FormMain.Edit4] do
-    if edit.Text <> '' then
-     //with rec.name do
-      if not Pos(edit.Text, rec. then
-        result := false;
-  if FormMain.DateTimePicker1.date <> rec.returndate then
-    result := false;}
+
   if Filter.name <> '' then
     if Pos(filter.name, rec.name) = 0 then
       result := false;
@@ -397,57 +364,48 @@ begin
   if Filter.cardID <> '' then
     if Pos(filter.cardID, rec.cardID) = 0 then
       result := false;
+
+  // Date?
 end;
 
-procedure TFormMain.ToggleBox1Change(Sender: TObject);
+procedure TFormMain.ButtonSearchClick(Sender: TObject);
 var
   rec: TRecord;
-  i: integer;
 begin
-  //SearchMode := ToggleBox1.Checked;
-  //Filter := RecordFromInput;
   filtered.Clear;
+  // Заполнить filtered
   for rec in storage do
     if FilterRec(rec) then
       filtered.InsertLast(rec);
+  // NOTE: Не менять колонку ID! Это сломает поиск записей
   redisplay(filtered);
-  //redisplay(storage);
-  //for row in FormMain.StringGrid do
-  {for i := 1 to storage.Count do
-    if not FilterRec( GetItem(storage, i)^.data ) then
-      FormMain.StringGrid.DeleteRow(  );}
 end;
 
-procedure TFormMain.FileOpen1Accept(Sender: TObject);
-//const
-  //handler: TCSVRecordProc = LoadRecord;
-
-{procedure handler(Fields: TStringList);
-begin
-  LoadRecord(Fields);
-end;}
-
-//const haddr: TCSVRecordProc = handler;
-
+procedure TFormMain.FileOpenAccept(Sender: TObject);
 begin
   storage.Clear;
-  with FileOpen1.Dialog do
+  try
+  with FileOpen.Dialog do
     if FileName.EndsWith('.TXT', true) or FileName.EndsWith('.CSV', true) then
     begin
-      //LoadFromCSVFile(storage, FileName)
-      storage.free;
+      storage.free;  // CSVToList создает новый список
       storage := CSVToList(FileName);
     end
     else
       LoadFromBinaryFile(storage, filename);
   redisplay(storage);
+  except on e: Exception do
+    ShowMessage(e.Message);
+  end;
 end;
 
-procedure TFormMain.FileSaveAs1Accept(Sender: TObject);
+procedure TFormMain.FileSaveAsAccept(Sender: TObject);
 begin
-  with FileSaveAs1.Dialog do
+  with FileSaveAs.Dialog do
     if FileName.EndsWith('.TXT', true) or FileName.EndsWith('.CSV', true) then
-      StringGrid.SaveToCSVFile(FileName, ',', false)
+      ListToCSV(storage, FileName)
+      // TODO: вынести в бекенд
+      // StringGrid.SaveToCSVFile(FileName, ',', false)
     else
       SaveToBinaryFile(storage, filename);
 end;

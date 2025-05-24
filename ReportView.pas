@@ -1,3 +1,4 @@
+// Окно отчета
 unit ReportView;
 
 {$mode ObjFPC}{$H+}
@@ -16,14 +17,14 @@ type
   { TFormReport }
 
   TFormReport = class(TForm)
-    ActionList1: TActionList;
-    Button1: TButton;
-    Button2: TButton;
-    FileExit1: TFileExit;
-    FileSaveAs1: TFileSaveAs;
-    Memo1: TMemo;
-    procedure Button1Click(Sender: TObject);
-    procedure FileSaveAs1Accept(Sender: TObject);
+    ActionList: TActionList;
+    ButtonClose: TButton;
+    ButtonSave: TButton;
+    ActionExit: TFileExit;
+    ActionSaveAs: TFileSaveAs;
+    Memo: TMemo;
+    procedure ButtonCloseClick(Sender: TObject);
+    procedure ActionSaveAsAccept(Sender: TObject);
   private
 
   public
@@ -41,27 +42,35 @@ uses
   LazUTF8;
   //DBRecord;
 
+// Отобразить отчет в Memo
 procedure ShowReport(storage: TRecordList);
 var
-  Header, underline: string;
+  header, underline, line: string;
   ndays: integer;
   rec: TRecord;
-  line: String;
   sorted: TRecordList;
 begin
+  // NOTE: обычные строковые функции работают правилько только с ASCII.
+  //       Необходимы UTF8-функции
   header := 'Дней до сдачи | № билета | ' +
-            utf8padleft('Читатель', 20) + ' | ' +
-            utf8padleft('Автор', 20) + ' | Книга';
-  underline := utf8padleft('', length(header), '-');
+            UTF8PadLeft('Читатель', 20) + ' | ' +
+            UTF8PadLeft('Автор', 20) + ' | Книга';
+  underline := UTF8PadLeft('', Length(header), '-');
 
 
-  FormReport.Memo1.Clear;
-  sorted := SortByDate(storage);
+  FormReport.Memo.Clear;
+  sorted := TRecordList.Create;
+
+  // Скопировать список перед сортировкой
+  for rec in storage do
+    sorted.InsertLast(rec);
+
+  SortBy(sorted, fDate);
   // ShowMessage(sorted.Count.ToString);
 
   //FormReport.Memo1.Append('Книга Автор № билета Читатель Долг');
-  FormReport.Memo1.Append(header);
-  FormReport.Memo1.Append(underline);
+  FormReport.Memo.Append(header);
+  FormReport.Memo.Append(underline);
   for rec in sorted do
   begin
     ndays := DaysBetween(rec.returndate, today);
@@ -77,8 +86,7 @@ begin
       utf8padleft(rec.author, 20), //+ ' | ' +
       rec.name
     ]);
-    //line := DateToStr(rec.returndate);
-    FormReport.Memo1.Append( line );
+    FormReport.Memo.Append( line );
   end;
   sorted.free;
 end;
@@ -87,14 +95,14 @@ end;
 
 { TFormReport }
 
-procedure TFormReport.Button1Click(Sender: TObject);
+procedure TFormReport.ButtonCloseClick(Sender: TObject);
 begin
   Close;
 end;
 
-procedure TFormReport.FileSaveAs1Accept(Sender: TObject);
+procedure TFormReport.ActionSaveAsAccept(Sender: TObject);
 begin
-  Memo1.Lines.SaveToFile(FileSaveAs1.Dialog.FileName);
+  Memo.Lines.SaveToFile(ActionSaveAs.Dialog.FileName);
 end;
 
 end.

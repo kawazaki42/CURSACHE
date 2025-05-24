@@ -1,7 +1,9 @@
+// Записи базы данных и действия с ними
 unit DBRecord;
 
 {$mode ObjFPC}{$H+}
-{$ModeSwitch nestedprocvars}
+{$ModeSwitch nestedprocvars}  // "Вложенные" процедуры.
+                              // Необходимо для LCSVUtils
 
 interface
 
@@ -13,53 +15,54 @@ uses
 type
   TRecord = record
     recordID: integer;
-    author: string[255];
     name: string[255];
+    author: string[255];
     cardID: string[64];
-    //readersurname: string;
-    //readerfirstname: string;
-    //readerpatronym: string;
     reader: string[255];
     returndate: TDateTime;
   end;
   TRecordList = specialize TLinkedList<TRecord>;
+  // Указатель на элемент списка
   PItem = TRecordList.PItem;
-  StoredFields = (fTitle = 0, fAuthor, fCard, fReader, fDate);
+  // Сохраняемые в файл поля записи
+  TStoredFields = (fTitle = 0, fAuthor, fCard, fReader, fDate);
 
-function GetItem(List: TRecordList; idx: integer): TRecordList.PItem;
-function SortByDate(List: TRecordList): TRecordList;
+function GetItem(List: TRecordList; idx: integer): TRecordList.PItem; 
+function ItemByID(List: TRecordList; ID: integer): PItem;
+
+//function SortByDate(List: TRecordList): TRecordList;        
+function CompareBy(a, b: TRecord; Key: TStoredFields): Integer;  
+function MinBy(List: TRecordList; Key: TStoredFields): PItem; 
+procedure SortBy(var List: TRecordList; Key: TStoredFields);
+
+procedure RenumberList(List: TRecordList);
+
 procedure SaveToBinaryFile(storage: TRecordList; filename: string);
 procedure LoadFromBinaryFile(storage: TRecordList; FileName: String);
-//procedure LoadFromCSVFile(storage: TRecordList; filename: string);
 function CSVToList(filename: string): TRecordList;
-procedure RenumberList(List: TRecordList);
-function CompareBy(a, b: TRecord; Key: StoredFields): Integer;
-function ItemByID(List: TRecordList; ID: integer): PItem;
+procedure ListToCSV(List: TRecordList; FileName: String);
 
 
 implementation
 
 var
+  // Необходимо для вложенной процедуры
   temp: TRecordList;
 
+// Получить элемент списка по индексу (начиная с 1)
 function GetItem(List: TRecordList; idx: integer): TRecordList.PItem;
 var
-  //x: TRecord;
   cur: TRecordList.PItem;
   offset: integer;
 begin
   offset := idx - 1;
   cur := List.First;
-  //dec(idx);  // 1-index to 0-index; thus offset
   for idx := 1 to offset do  // do (idx-1) jumps
     cur := cur^.next;
   result := cur;
-  {begin
-    if idx = 0 then exit;
-    dec(idx);
-  end;}
 end;
 
+// Получить элемент списка по ID записи
 function ItemByID(List: TRecordList; ID: integer): PItem;
 var
   cur: PItem;
@@ -74,24 +77,8 @@ begin
   result := cur;
 end;
 
-function MinByDate(List: TRecordList): TRecordList.PItem;
-var
-  tempmin, cur: TRecordList.PItem;
-  //rec: TRecord;
-begin
-  cur := List.First;
-  tempmin := List.First;
-  while not cur^.IsLast do
-  begin
-  //for rec in List do
-    if CompareDate(cur^.data.returndate, tempmin^.data.returndate) < 0 then
-      tempmin := cur;
-    cur := cur^.Next;
-  end;
-  result := tempmin
-end;
-
-function CompareBy(a, b: TRecord; Key: StoredFields): Integer;
+// Сравнить две записи по полю
+function CompareBy(a, b: TRecord; Key: TStoredFields): Integer;
 begin
   case Key of
     fTitle:  result := AnsiCompareText(a.name, b.name);
@@ -102,7 +89,8 @@ begin
   end;
 end;
 
-function MinBy(List: TRecordList; Key: StoredFields): PItem;
+// Минимальный элемент списка по полю
+function MinBy(List: TRecordList; Key: TStoredFields): PItem;
 var
   tempmin, cur: TRecordList.PItem;
   a, b: TRecord;
@@ -114,55 +102,27 @@ begin
   begin
     a := cur^.data;
     b := tempmin^.data;
-    //if Key = fDate then
-    //begin
-    //  if CompareDate(cur^.data.returndate, tempmin^.data.returndate) < 0 then
-    //    tempmin := cur
-    //end else
-    //begin
-      //with cur^.data do
-      case Key of
-        fTitle:  diff := AnsiCompareText(a.name, b.name);
-        fAuthor: diff := AnsiCompareText(a.author, b.author);
-        fCard:   diff := AnsiCompareText(a.cardID, b.cardID);
-        fReader: diff := AnsiCompareText(a.reader, b.reader);
-        fDate:   diff := CompareDate(a.returndate, b.returndate);
-      end;
-      if diff < 0 then
-        tempmin := cur;
-    //end;
+
+    case Key of
+      fTitle:  diff := AnsiCompareText(a.name, b.name);
+      fAuthor: diff := AnsiCompareText(a.author, b.author);
+      fCard:   diff := AnsiCompareText(a.cardID, b.cardID);
+      fReader: diff := AnsiCompareText(a.reader, b.reader);
+      fDate:   diff := CompareDate(a.returndate, b.returndate);
+    end;
+
+    if diff < 0 then
+      tempmin := cur;
 
     cur := cur^.Next;
   end;
+
   result := tempmin;
 end;
 
-function SortByDate(List: TRecordList): TRecordList;
-var
-  min: TRecordList.PItem;
-  rec: TRecord;
-  unsorted: TRecordList;
-begin
-  result := TRecordList.Create;
-  unsorted := TRecordList.Create;
-  for rec in List do
-    unsorted.InsertLast(rec);
-
-  while unsorted.Count <> 0 do
-  begin
-    min := MinByDate(unsorted);
-    {for rec in unsorted do
-      if CompareDate(rec.returndate, tempmin^.data.returndate) < 0 then
-        tempmin := rec;}
-
-    result.InsertLast(min^.data);
-    unsorted.Delete(min);
-  end;
-  assert(unsorted.Count = 0);
-  unsorted.free;
-end;
-
-procedure SortBy(var List: TRecordList; Key: StoredFields);
+// Сортировать список по полю
+procedure SortBy(var List: TRecordList; Key: TStoredFields);
+// NOTE: меняет List (по ссылке, var)
 var
   result: TRecordList;
   min: PItem;
@@ -182,21 +142,6 @@ begin
   List := result;
 end;
 
-procedure SaveToBinaryFile(storage: TRecordList; filename: string);
-var
-  f: file of TRecord;
-  rec: TRecord;
-begin
-  AssignFile(f, filename);
-  Rewrite(f);
-  try
-    for rec in storage do
-      write(f, rec);
-  finally
-    CloseFile(f);
-  end;
-end;
-
 procedure RenumberList(List: TRecordList);
 var
   cur: PItem;
@@ -213,13 +158,30 @@ begin
   end;
 end;
 
+// Сохранить список в двоичный (типизированный) файл
+procedure SaveToBinaryFile(storage: TRecordList; FileName: string);
+var
+  f: file of TRecord;
+  rec: TRecord;
+begin
+  AssignFile(f, filename);
+  Rewrite(f);
+  try
+    for rec in storage do
+      write(f, rec);
+  finally
+    CloseFile(f);
+  end;
+end;
+
+// Загрузить список из двоичного (типизированного) файла
 procedure LoadFromBinaryFile(storage: TRecordList; FileName: String);
 var
   f: file of TRecord;
   rec: TRecord;
   i: integer;
 begin
-  AssignFile(f, filename);
+  AssignFile(f, FileName);
   Reset(f);
   try
     i := 1;
@@ -235,7 +197,8 @@ begin
   end;
 end;
 
-
+// Вспомогательная процедура для LoadFromCSVFile.
+// Использует глобальный temp
 procedure LoadRecord(Fields: TStringList);
 var
   x: TRecord;
@@ -244,19 +207,48 @@ begin
   x.author := Fields[Ord(fAuthor)];
   x.cardID := Fields[Ord(fCard)];
   x.reader := Fields[Ord(fReader)];
-  x.returndate := strtodate(Fields[Ord(fDate)]);
-  //x.returndate := ;
+  if not TryStrToDate(Fields[Ord(fDate)], x.returndate) then
+    x.returndate := MaxDateTime;
   temp.InsertLast(x);
 end;
 
+// Получить список из текстового (CSV) файла
 function CSVToList(filename: string): TRecordList;
 begin
-  //temp.free;
   temp := TRecordList.Create;  // Новая ссылка
-  //result.create;
   LCSVUtils.LoadFromCSVFile(FileName, @LoadRecord);
   RenumberList(temp);
   result := temp;
+  temp := nil;
+  // NOTE: не вызывать Free, иначе результат функции будет nil
+end;
+
+
+// Сохраить список в текстовый (CSV) файл
+procedure ListToCSV(List: TRecordList; FileName: String);
+var
+  text, temp: TStringList;
+  rec: TRecord;
+begin
+  text := TStringList.Create;
+  temp := TStringList.Create;
+
+  for rec in List do
+  begin
+    temp.Add(rec.name);
+    temp.Add(rec.author);
+    temp.Add(rec.cardID);
+    temp.Add(rec.reader);
+    temp.Add( DateToStr(rec.returndate) );
+
+    text.Add(temp.CommaText);
+    temp.Clear;
+  end;
+
+  text.SaveToFile(FileName);
+
+  text.Free;
+  temp.Free;
 end;
 
 end.

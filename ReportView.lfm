@@ -6,8 +6,8 @@ object FormReport: TFormReport
   Caption = 'Отчет'
   ClientHeight = 240
   ClientWidth = 320
-  LCLVersion = '2.2.0.4'
-  object Memo1: TMemo
+  LCLVersion = '3.8.0.0'
+  object Memo: TMemo
     Left = 0
     Height = 202
     Top = 0
@@ -21,42 +21,42 @@ object FormReport: TFormReport
     TabOrder = 0
     WordWrap = False
   end
-  object Button1: TButton
+  object ButtonClose: TButton
     Left = 240
     Height = 25
     Hint = 'Выход'
     Top = 208
     Width = 75
     Anchors = [akRight, akBottom]
-    Caption = 'В&ыход'
+    Caption = '&Закрыть'
     Default = True
-    OnClick = Button1Click
     TabOrder = 1
+    OnClick = ButtonCloseClick
   end
-  object Button2: TButton
+  object ButtonSave: TButton
     Left = 8
     Height = 25
     Top = 208
     Width = 104
-    Action = FileSaveAs1
+    Action = ActionSaveAs
     Anchors = [akLeft, akBottom]
     Caption = 'Сохранить &как...'
     TabOrder = 2
   end
-  object ActionList1: TActionList
+  object ActionList: TActionList
     Left = 144
     Top = 208
-    object FileExit1: TFileExit
+    object ActionExit: TFileExit
       Category = 'File'
-      Caption = 'В&ыход'
-      Hint = 'Выход'
+      Caption = '&Закрыть'
+      Hint = 'Закрыть'
     end
-    object FileSaveAs1: TFileSaveAs
+    object ActionSaveAs: TFileSaveAs
       Category = 'File'
       Caption = 'Сохранить &как ...'
       Dialog.Filter = 'Текстовый файл|*.txt'
       Hint = 'Сохранить как...'
-      OnAccept = FileSaveAs1Accept
+      OnAccept = ActionSaveAsAccept
     end
   end
 end

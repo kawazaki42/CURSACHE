@@ -3,12 +3,15 @@ object FormMain: TFormMain
   Height = 245
   Top = 170
   Width = 359
+  AutoSize = True
   Caption = 'BooksDB'
   ClientHeight = 245
   ClientWidth = 359
-  Menu = MainMenu1
-  OnClose = FormClose
+  Menu = MainMenu
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  LCLVersion = '3.8.0.0'
   object StringGrid: TStringGrid
     Left = 0
     Height = 120
@@ -73,11 +76,11 @@ object FormMain: TFormMain
       63
     )
   end
-  object Panel1: TPanel
+  object PanelRecord: TPanel
     AnchorSideTop.Control = StringGrid
     AnchorSideTop.Side = asrBottom
     Left = 0
-    Height = 24
+    Height = 25
     Top = 120
     Width = 359
     Anchors = [akTop, akLeft, akRight]
@@ -85,52 +88,49 @@ object FormMain: TFormMain
     ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
     ChildSizing.ShrinkHorizontal = crsScaleChilds
     ChildSizing.Layout = cclTopToBottomThenLeftToRight
-    ClientHeight = 24
+    ClientHeight = 25
     ClientWidth = 359
     TabOrder = 1
-    object Edit1: TEdit
-      Left = 0
+    object EditTitle: TEdit
+      Left = 1
       Height = 23
-      Top = 0
+      Top = 1
       Width = 100
       Constraints.MinWidth = 100
       TabOrder = 0
       TextHint = 'Книга'
     end
-    object Edit2: TEdit
-      Left = 100
+    object EditAuthor: TEdit
+      Left = 101
       Height = 23
-      Top = 0
-      Width = 65
-      Constraints.MaxWidth = 150
+      Top = 1
+      Width = 64
       TabOrder = 1
       TextHint = 'Автор'
     end
-    object Edit3: TEdit
+    object EditCard: TEdit
       AnchorSideRight.Side = asrBottom
       Left = 165
       Height = 23
-      Top = 0
-      Width = 65
-      Constraints.MaxWidth = 150
+      Top = 1
+      Width = 64
       TabOrder = 2
       TextHint = '№ билета'
     end
-    object Edit4: TEdit
+    object EditReader: TEdit
       AnchorSideRight.Side = asrBottom
-      Left = 230
+      Left = 229
       Height = 23
-      Top = 0
+      Top = 1
       Width = 65
-      Constraints.MaxWidth = 150
       TabOrder = 3
       TextHint = 'Читатель'
     end
-    object DateTimePicker1: TDateTimePicker
+    object DateReturn: TDateTimePicker
       AnchorSideRight.Side = asrBottom
-      Left = 295
+      Left = 294
       Height = 23
-      Top = 0
+      Top = 1
       Width = 64
       CenturyFrom = 1941
       MaxDate = 2958465
@@ -139,7 +139,6 @@ object FormMain: TFormMain
       TrailingSeparator = False
       TextForNullDate = 'NULL'
       LeadingZeros = True
-      Constraints.MaxWidth = 150
       Kind = dtkDate
       TimeFormat = tf24
       TimeDisplay = tdHMS
@@ -151,16 +150,21 @@ object FormMain: TFormMain
       MonthNames = 'Long'
     end
   end
-  object Panel2: TPanel
-    AnchorSideTop.Control = Panel1
+  object PanelButtons: TPanel
+    AnchorSideLeft.Control = Owner
+    AnchorSideLeft.Side = asrCenter
+    AnchorSideTop.Control = PanelRecord
     AnchorSideTop.Side = asrBottom
-    Left = 0
-    Height = 32
-    Top = 152
+    Left = -1
+    Height = 56
+    Top = 153
     Width = 361
-    BorderSpacing.Top = 8
-    ChildSizing.Layout = cclTopToBottomThenLeftToRight
-    ClientHeight = 32
+    BorderSpacing.Around = 8
+    BevelOuter = bvNone
+    ChildSizing.VerticalSpacing = 8
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 4
+    ClientHeight = 56
     ClientWidth = 361
     TabOrder = 2
     object ButtonAdd: TButton
@@ -170,8 +174,8 @@ object FormMain: TFormMain
       Width = 85
       Caption = 'Добавить'
       Constraints.MinWidth = 85
-      OnClick = ButtonAddClick
       TabOrder = 0
+      OnClick = ButtonAddClick
     end
     object ButtonToggleEdit: TButton
       Left = 85
@@ -180,8 +184,8 @@ object FormMain: TFormMain
       Width = 106
       Caption = 'Редактировать'
       Constraints.MinWidth = 106
-      OnClick = ButtonToggleEditClick
       TabOrder = 1
+      OnClick = ButtonToggleEditClick
     end
     object ButtonDup: TButton
       Left = 191
@@ -189,8 +193,8 @@ object FormMain: TFormMain
       Top = 0
       Width = 98
       Caption = 'Дублировать'
-      OnClick = ButtonDupClick
       TabOrder = 2
+      OnClick = ButtonDupClick
     end
     object ButtonDelete: TButton
       Left = 289
@@ -198,62 +202,68 @@ object FormMain: TFormMain
       Top = 0
       Width = 70
       Caption = 'Удалить'
-      OnClick = ButtonDeleteClick
       TabOrder = 3
+      OnClick = ButtonDeleteClick
+    end
+    object ButtonSearch: TButton
+      AnchorSideLeft.Control = PanelButtons
+      AnchorSideLeft.Side = asrCenter
+      Left = 125
+      Height = 25
+      Top = 32
+      Width = 110
+      Anchors = [akLeft, akBottom]
+      Caption = 'Фильтр по полям'
+      TabOrder = 4
+      OnClick = ButtonSearchClick
     end
   end
-  object ToggleBox1: TButton
-    Left = 272
-    Height = 25
-    Top = 192
-    Width = 75
-    Anchors = [akLeft, akBottom]
-    Caption = 'Поиск'
-    OnClick = ToggleBox1Change
-    TabOrder = 3
-  end
-  object MainMenu1: TMainMenu
+  object MainMenu: TMainMenu
     Left = 8
     Top = 200
-    object MenuItem1: TMenuItem
+    object MenuFile: TMenuItem
       Caption = '&Файл'
-      object MenuItem2: TMenuItem
-        Action = FileOpen1
+      object MenuFileOpen: TMenuItem
+        Action = FileOpen
       end
-      object MenuItem3: TMenuItem
-        Action = FileSaveAs1
+      object MenuFileSaveAs: TMenuItem
+        Action = FileSaveAs
       end
     end
-    object MenuItem5: TMenuItem
+    object MenuService: TMenuItem
       Caption = '&Сервис'
-      object MenuItem4: TMenuItem
-        Action = Action1
+      object MenuServiceReport: TMenuItem
+        Action = ActionReport
       end
     end
   end
-  object ActionList1: TActionList
+  object ActionList: TActionList
     Left = 48
     Top = 200
-    object FileSaveAs1: TFileSaveAs
+    object FileSaveAs: TFileSaveAs
       Category = 'File'
       Caption = 'Сохранить &как...'
       Dialog.Filter = 'Текстовый файл (CSV)|*.csv;*.txt|Двоичный файл|*.dat|Все файлы|*'
       Hint = 'Сохранить как...'
       ShortCut = 24659
-      OnAccept = FileSaveAs1Accept
+      OnAccept = FileSaveAsAccept
     end
-    object FileOpen1: TFileOpen
+    object FileOpen: TFileOpen
       Category = 'File'
       Caption = 'О&ткрыть...'
       Dialog.Filter = 'Текстовый файл (CSV)|*.txt;*.csv|Двоичный файл|*.dat|Все файлы|*'
       Hint = 'Открыть'
       ShortCut = 16463
-      OnAccept = FileOpen1Accept
+      OnAccept = FileOpenAccept
     end
-    object Action1: TAction
+    object ActionReport: TAction
       Caption = '&Отчет...'
-      OnExecute = Action1Execute
+      OnExecute = ActionReportExecute
       ShortCut = 120
+    end
+    object ActionSaveRecord: TAction
+      OnExecute = ButtonAddClick
+      ShortCut = 13
     end
   end
 end
