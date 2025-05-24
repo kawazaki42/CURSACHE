@@ -8,7 +8,7 @@
       <Unit>
         <Filename Value="BooksDB.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="6"/>
         <TopLine Value="4"/>
         <CursorPos Y="25"/>
         <UsageCount Value="66"/>
@@ -20,8 +20,8 @@
         <ComponentName Value="FormMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="102"/>
-        <CursorPos X="13" Y="111"/>
+        <TopLine Value="390"/>
+        <CursorPos X="35" Y="406"/>
         <UsageCount Value="66"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -39,8 +39,7 @@
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="91"/>
-        <CursorPos X="17" Y="96"/>
+        <CursorPos X="57" Y="32"/>
         <UsageCount Value="66"/>
         <Loaded Value="True"/>
       </Unit>
@@ -50,7 +49,7 @@
         <ComponentName Value="FormReport"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="87"/>
         <CursorPos X="27" Y="45"/>
         <UsageCount Value="42"/>
@@ -220,17 +219,19 @@
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\sysstrh.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="29"/>
-        <CursorPos X="3" Y="40"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="82"/>
+        <CursorPos X="10" Y="93"/>
         <UsageCount Value="10"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\sysstr.inc"/>
-        <EditorIndex Value="-1"/>
+        <EditorIndex Value="3"/>
         <TopLine Value="571"/>
-        <CursorPos X="5" Y="573"/>
-        <UsageCount Value="8"/>
+        <CursorPos X="33" Y="574"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
       </Unit>
       <Unit>
         <Filename Value="C:\lazarus\components\lazutils\LazLoggerIntf.inc"/>
@@ -327,24 +328,16 @@
         <CursorPos X="3" Y="584"/>
         <UsageCount Value="10"/>
       </Unit>
+      <Unit>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\inc\ustringh.inc"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="102"/>
+        <CursorPos X="5" Y="107"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit>
     </Units>
-    <JumpHistory HistoryIndex="29">
-      <Position>
-        <Filename Value="MainWindow.pas"/>
-        <Caret Line="108" Column="98" TopLine="99"/>
-      </Position>
-      <Position>
-        <Filename Value="MainWindow.pas"/>
-        <Caret Line="122" Column="4" TopLine="112"/>
-      </Position>
-      <Position>
-        <Filename Value="MainWindow.pas"/>
-        <Caret Line="57" Column="67" TopLine="47"/>
-      </Position>
-      <Position>
-        <Filename Value="MainWindow.pas"/>
-        <Caret Line="333" Column="27" TopLine="328"/>
-      </Position>
+    <JumpHistory HistoryIndex="28">
       <Position>
         <Filename Value="MainWindow.pas"/>
         <Caret Line="76" Column="12" TopLine="62"/>
@@ -448,6 +441,18 @@
       <Position>
         <Filename Value="ReportView.pas"/>
         <Caret Line="72" Column="18" TopLine="60"/>
+      </Position>
+      <Position>
+        <Filename Value="DBRecord.pas"/>
+        <Caret Line="32" Column="57" TopLine="73"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\sysstrh.inc"/>
+        <Caret Line="93" Column="10" TopLine="82"/>
+      </Position>
+      <Position>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\objpas\sysutils\sysstr.inc"/>
+        <Caret Line="574" Column="33" TopLine="571"/>
       </Position>
     </JumpHistory>
     <RunParams>

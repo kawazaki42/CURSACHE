@@ -30,7 +30,6 @@ type
 function GetItem(List: TRecordList; idx: integer): TRecordList.PItem; 
 function ItemByID(List: TRecordList; ID: integer): PItem;
 
-//function SortByDate(List: TRecordList): TRecordList;        
 function CompareBy(a, b: TRecord; Key: TStoredFields): Integer;  
 function MinBy(List: TRecordList; Key: TStoredFields): PItem; 
 procedure SortBy(var List: TRecordList; Key: TStoredFields);

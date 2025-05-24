@@ -88,7 +88,7 @@ var
   // Общий список записей базы данных
   storage: TRecordList;
   // Фильтрованый список базы данных
-  // nil если фильтры не активны
+  // пуст, если фильтры не активны
   filtered: TRecordList;
 
 
@@ -404,8 +404,6 @@ begin
   with FileSaveAs.Dialog do
     if FileName.EndsWith('.TXT', true) or FileName.EndsWith('.CSV', true) then
       ListToCSV(storage, FileName)
-      // TODO: вынести в бекенд
-      // StringGrid.SaveToCSVFile(FileName, ',', false)
     else
       SaveToBinaryFile(storage, filename);
 end;
