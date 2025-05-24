@@ -94,7 +94,6 @@ function MinBy(List: TRecordList; Key: TStoredFields): PItem;
 var
   tempmin, cur: TRecordList.PItem;
   a, b: TRecord;
-  diff: Integer;
 begin
   cur := List.First;
   tempmin := cur;
@@ -103,15 +102,7 @@ begin
     a := cur^.data;
     b := tempmin^.data;
 
-    case Key of
-      fTitle:  diff := AnsiCompareText(a.name, b.name);
-      fAuthor: diff := AnsiCompareText(a.author, b.author);
-      fCard:   diff := AnsiCompareText(a.cardID, b.cardID);
-      fReader: diff := AnsiCompareText(a.reader, b.reader);
-      fDate:   diff := CompareDate(a.returndate, b.returndate);
-    end;
-
-    if diff < 0 then
+    if CompareBy(a, b, Key) < 0 then
       tempmin := cur;
 
     cur := cur^.Next;

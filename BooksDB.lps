@@ -11,7 +11,7 @@
         <EditorIndex Value="3"/>
         <TopLine Value="4"/>
         <CursorPos Y="25"/>
-        <UsageCount Value="65"/>
+        <UsageCount Value="66"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -20,10 +20,9 @@
         <ComponentName Value="FormMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <TopLine Value="102"/>
-        <CursorPos X="29" Y="112"/>
-        <UsageCount Value="65"/>
+        <CursorPos X="13" Y="111"/>
+        <UsageCount Value="66"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
@@ -33,15 +32,16 @@
         <UnitName Value="LinkedLists"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="24" Y="11"/>
-        <UsageCount Value="65"/>
+        <UsageCount Value="66"/>
       </Unit>
       <Unit>
         <Filename Value="DBRecord.pas"/>
         <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="79"/>
-        <CursorPos X="42" Y="227"/>
-        <UsageCount Value="65"/>
+        <TopLine Value="91"/>
+        <CursorPos X="17" Y="96"/>
+        <UsageCount Value="66"/>
         <Loaded Value="True"/>
       </Unit>
       <Unit>
@@ -53,7 +53,7 @@
         <EditorIndex Value="2"/>
         <TopLine Value="87"/>
         <CursorPos X="27" Y="45"/>
-        <UsageCount Value="41"/>
+        <UsageCount Value="42"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit>
