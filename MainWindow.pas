@@ -22,6 +22,7 @@ type
     ActionList: TActionList;
 
     ActionSaveRecord: TAction;
+    ActionEdit: TAction;
     ActionReport: TAction;
     FileOpen: TFileOpen;
     FileSaveAs: TFileSaveAs;

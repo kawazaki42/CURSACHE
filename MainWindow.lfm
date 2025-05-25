@@ -265,5 +265,10 @@ object FormMain: TFormMain
       OnExecute = ButtonAddClick
       ShortCut = 13
     end
+    object ActionEdit: TAction
+      Caption = 'Редактировать'
+      OnExecute = ButtonToggleEditClick
+      ShortCut = 113
+    end
   end
 end
