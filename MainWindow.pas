@@ -115,9 +115,9 @@ end;
 // FIXME: не сразу разворачивается на весь экран
 procedure TFormMain.FormShow(Sender: TObject);
 begin
-  AutoSize := false;
-  AutoSize := true;
-  AutoSize := false;
+  //AutoSize := false;
+  //AutoSize := true;
+  //AutoSize := false;
 end;
 
 // Сравнить две записи по определенном столбце.

@@ -1,10 +1,10 @@
 object FormMain: TFormMain
   Left = 448
-  Height = 245
+  Height = 213
   Top = 170
   Width = 359
   Caption = 'BooksDB'
-  ClientHeight = 245
+  ClientHeight = 213
   ClientWidth = 359
   Menu = MainMenu
   OnCreate = FormCreate
@@ -218,8 +218,8 @@ object FormMain: TFormMain
     end
   end
   object MainMenu: TMainMenu
-    Left = 8
-    Top = 200
+    Left = 16
+    Top = 176
     object MenuFile: TMenuItem
       Caption = '&Файл'
       object MenuFileOpen: TMenuItem
@@ -237,8 +237,8 @@ object FormMain: TFormMain
     end
   end
   object ActionList: TActionList
-    Left = 48
-    Top = 200
+    Left = 56
+    Top = 176
     object FileSaveAs: TFileSaveAs
       Category = 'File'
       Caption = 'Сохранить &как...'
@@ -250,7 +250,7 @@ object FormMain: TFormMain
     object FileOpen: TFileOpen
       Category = 'File'
       Caption = 'О&ткрыть...'
-      Dialog.Filter = 'Текстовый файл (CSV)|*.txt;*.csv|Двоичный файл|*.dat|Все файлы|*'
+      Dialog.Filter = 'Все файлы|*|Текстовый файл (CSV)|*.txt;*.csv|Двоичный файл|*.dat'
       Hint = 'Открыть'
       ShortCut = 16463
       OnAccept = FileOpenAccept

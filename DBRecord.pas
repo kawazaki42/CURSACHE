@@ -48,7 +48,7 @@ procedure SaveToBinaryFile(storage: TRecordList; filename: string);
 procedure LoadFromBinaryFile(storage: TRecordList; FileName: String);
 // Получить список из текстового (CSV) файла
 function CSVToList(filename: string): TRecordList;
-// Сохраить список в текстовый (CSV) файл
+// Сохранить список в текстовый (CSV) файл
 procedure ListToCSV(List: TRecordList; FileName: String);
 
 
@@ -225,7 +225,7 @@ begin
 end;
 
 
-// Сохраить список в текстовый (CSV) файл
+// Сохранить список в текстовый (CSV) файл
 procedure ListToCSV(List: TRecordList; FileName: String);
 var
   text, temp: TStringList;
