@@ -1,5 +1,6 @@
 *.exe
 *.res
+*.lps
 backup
 lib
 .~lock.*.odt#
