@@ -117,6 +117,7 @@ procedure TFormMain.FormShow(Sender: TObject);
 begin
   AutoSize := false;
   AutoSize := true;
+  AutoSize := false;
 end;
 
 // Сравнить две записи по определенном столбце.

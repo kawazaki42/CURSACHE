@@ -3,7 +3,6 @@ object FormMain: TFormMain
   Height = 245
   Top = 170
   Width = 359
-  AutoSize = True
   Caption = 'BooksDB'
   ClientHeight = 245
   ClientWidth = 359
