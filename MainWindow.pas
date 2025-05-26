@@ -97,6 +97,7 @@ var
 
 { TFormMain }
 
+// Создание экземпляра формы. Инициализация переменных
 procedure TFormMain.FormCreate(Sender: TObject);
 begin
   storage := TRecordList.Create;
@@ -106,6 +107,7 @@ begin
   DateReturn.Date := Today;
 end; 
 
+// Удаление экземпляра формы. Освобождение памяти
 procedure TFormMain.FormDestroy(Sender: TObject);
 begin
   storage.free;
@@ -113,6 +115,7 @@ begin
 end;
 
 // FIXME: не сразу разворачивается на весь экран
+// Обработчик события показа формы
 procedure TFormMain.FormShow(Sender: TObject);
 begin
   //AutoSize := false;
@@ -120,7 +123,7 @@ begin
   //AutoSize := false;
 end;
 
-// Сравнить две записи по определенном столбце.
+// Сравнить две записи по определенному столбцу.
 function CompareByCol(a, b: TRecord; key: TDBColumn): Integer;
 const
   // Получить поле записи по столбцу.
@@ -136,6 +139,7 @@ begin
   result := CompareBy(a, b, ColToField[key]);
 end;
 
+// Сравнить ячейки таблицы
 procedure TFormMain.StringGridCompareCells(Sender: TObject; ACol, ARow, BCol,
   BRow: Integer; var Result: integer);
 var
@@ -233,6 +237,7 @@ begin
   result.returndate := FormMain.DateReturn.date;
 end;
 
+// Очистить поля ввода
 procedure ClearInput;
 begin
   FormMain.EditTitle.Clear;
@@ -242,6 +247,7 @@ begin
   FormMain.DateReturn.date := today;
 end;
 
+// Кнопка добавить
 procedure TFormMain.ButtonAddClick(Sender: TObject);
 begin
   if PEditedRecord <> nil then  // режим редактирования
@@ -261,6 +267,7 @@ begin
   ShowReport(storage);
 end;
 
+// Кнопка удалить
 procedure TFormMain.ButtonDeleteClick(Sender: TObject);
 begin
   // Защита от ошибки при пустом списке
@@ -320,6 +327,7 @@ begin
   EnterEditMode;
 end;
 
+// Кнопка дублировать
 procedure TFormMain.ButtonDupClick(Sender: TObject);
 begin
   // Защита от ошибки при пустом списке
@@ -332,6 +340,7 @@ begin
   StringGrid.Row := StringGrid.row + 1;
 end;
 
+// Сохранить изменения записи
 procedure TFormMain.ButtonEditSaveClick(Sender: TObject);
 begin
   // Если не в режиме редактирования
@@ -370,6 +379,7 @@ begin
   // Date?
 end;
 
+// Кнопка поиска (фильтр)
 procedure TFormMain.ButtonSearchClick(Sender: TObject);
 var
   rec: TRecord;
@@ -383,6 +393,7 @@ begin
   redisplay(filtered);
 end;
 
+// Принятие файла на чтение
 procedure TFormMain.FileOpenAccept(Sender: TObject);
 begin
   storage.Clear;
@@ -401,6 +412,7 @@ begin
   end;
 end;
 
+// Принятие файла на запись
 procedure TFormMain.FileSaveAsAccept(Sender: TObject);
 begin
   with FileSaveAs.Dialog do
