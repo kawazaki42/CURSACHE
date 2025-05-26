@@ -65,6 +65,7 @@ object FormMain: TFormMain
     RowCount = 4
     TabOrder = 0
     OnCompareCells = StringGridCompareCells
+    OnHeaderClick = StringGridHeaderClick
     OnResize = StringGridResize
     ColWidths = (
       31
@@ -227,6 +228,11 @@ object FormMain: TFormMain
       end
       object MenuFileSaveAs: TMenuItem
         Action = FileSaveAs
+      end
+      object MenuFileNew: TMenuItem
+        Caption = '&Новый...'
+        ShortCut = 16462
+        OnClick = MenuFileNewClick
       end
     end
     object MenuService: TMenuItem

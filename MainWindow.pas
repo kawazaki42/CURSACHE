@@ -43,6 +43,8 @@ type
     MenuFile: TMenuItem;
     MenuFileOpen: TMenuItem;
     MenuFileSaveAs: TMenuItem;
+    MenuFileNew: TMenuItem;
+
     MenuService: TMenuItem;
     MenuServiceReport: TMenuItem;
 
@@ -61,8 +63,11 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure MenuFileNewClick(Sender: TObject);
     procedure StringGridCompareCells(Sender: TObject; ACol, ARow, BCol,
       BRow: Integer; var Result: integer);
+    procedure StringGridHeaderClick(Sender: TObject; IsColumn: Boolean;
+      Index: Integer);
     procedure StringGridResize(Sender: TObject);
     procedure ButtonSearchClick(Sender: TObject);
 
@@ -143,14 +148,20 @@ end;
 procedure TFormMain.StringGridCompareCells(Sender: TObject; ACol, ARow, BCol,
   BRow: Integer; var Result: integer);
 var
-  aID, bID: integer;
+  aIDstr, bIDstr: String;
+  aID, bID: Integer;
 begin
   result := 0;
 
   assert(ACol = BCol);
 
-  aID := StringGrid.rows[ARow][Ord(colID)].toInteger;
-  bID := StringGrid.rows[BRow][Ord(colID)].toInteger;
+  aIDstr := StringGrid.rows[ARow][Ord(colID)];
+  if aIDstr = '' then exit;
+  bIDstr := StringGrid.rows[BRow][Ord(colID)];
+  if aIDstr = '' then exit;
+
+  aID := aIDstr.ToInteger;
+  bID := aIDstr.ToInteger;
 
   result := CompareByCol(ItemByID(storage, aID)^.Data,
                          ItemByID(storage, bID)^.Data,
@@ -160,6 +171,13 @@ begin
   // по возрастанию/убыванию
   if StringGrid.SortOrder = soDescending then
     result := -result;
+end;
+
+procedure TFormMain.StringGridHeaderClick(Sender: TObject; IsColumn: Boolean;
+  Index: Integer);
+begin
+  if Index = Ord(colID) then
+    StringGrid.HideSortArrow;
 end;
 
 // Автоматитески изменить размер при изменении размера таблицы
@@ -245,6 +263,17 @@ begin
   FormMain.EditCard.Clear;
   FormMain.EditReader.Clear;
   FormMain.DateReturn.date := today;
+end;
+
+// Новый файл (очистить)
+procedure TFormMain.MenuFileNewClick(Sender: TObject);
+begin
+  if MessageDlg('Закрыть файл и создать новый?', mtConfirmation,
+                [mbYes, mbCancel], 0, mbCancel) <> mrYes then exit;
+
+  Storage.Clear;
+  filtered.Clear;
+  Redisplay(Storage);  // assert empty
 end;
 
 // Кнопка добавить
