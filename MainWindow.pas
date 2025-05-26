@@ -173,11 +173,14 @@ begin
     result := -result;
 end;
 
+// Скрыть стрелку при сортировке по ID
+// FIXME: отключает сортировку в обратном порядке
 procedure TFormMain.StringGridHeaderClick(Sender: TObject; IsColumn: Boolean;
   Index: Integer);
 begin
-  if (Index = Ord(colID)) and (StringGrid.SortOrder = soAscending) then
-    StringGrid.HideSortArrow;
+  {Assert(IsColumn);
+  if (Index = Ord(colID)) and (StringGrid.SortOrder = soDescending) then
+    StringGrid.HideSortArrow;}
 end;
 
 // Автоматитески изменить размер при изменении размера таблицы
@@ -273,6 +276,8 @@ begin
 
   Storage.Clear;
   filtered.Clear;
+
+  StringGrid.HideSortArrow;
   Redisplay(Storage);  // assert empty
 end;
 
@@ -283,8 +288,10 @@ begin
     ButtonEditSaveClick(self)
   else
     storage.InsertLast( RecordFromInput );
+
   RenumberList(storage);  // NOTE: номера записей меняются
                           //       в соответствии с их порядком в списке
+  StringGrid.HideSortArrow;
   Redisplay(storage);
   ClearInput;
 end;
@@ -303,7 +310,9 @@ begin
   if storage.Count = 0 then exit;
 
   storage.Delete( SelectedRecord );
+
   RenumberList(storage);
+  StringGrid.HideSortArrow;
   Redisplay(storage);
 end;
 
@@ -363,8 +372,11 @@ begin
   if storage.Count = 0 then exit;
 
   SelectedRecord^.InsertAfter(SelectedRecord^.data);
+
   RenumberList(storage);
+  StringGrid.HideSortArrow;
   Redisplay(storage);
+
   // Выделить новую запись
   StringGrid.Row := StringGrid.row + 1;
 end;
@@ -376,9 +388,11 @@ begin
   if PEditedRecord = nil then exit;
 
   PEditedRecord^.data := RecordFromInput;
-  RenumberList(storage);
-  Redisplay(storage);
+                       
   ExitEditMode;
+  RenumberList(storage);
+  StringGrid.HideSortArrow;
+  Redisplay(storage);
 end;
 
 // Соответствует ли запись критериям поиска?
@@ -435,6 +449,7 @@ begin
     end
     else
       LoadFromBinaryFile(storage, filename);
+  StringGrid.HideSortArrow;
   redisplay(storage);
   except on e: Exception do
     ShowMessage(e.Message);
