@@ -161,7 +161,7 @@ begin
   if aIDstr = '' then exit;
 
   aID := aIDstr.ToInteger;
-  bID := aIDstr.ToInteger;
+  bID := bIDstr.ToInteger;
 
   result := CompareByCol(ItemByID(storage, aID)^.Data,
                          ItemByID(storage, bID)^.Data,
@@ -176,7 +176,7 @@ end;
 procedure TFormMain.StringGridHeaderClick(Sender: TObject; IsColumn: Boolean;
   Index: Integer);
 begin
-  if Index = Ord(colID) then
+  if (Index = Ord(colID)) and (StringGrid.SortOrder = soAscending) then
     StringGrid.HideSortArrow;
 end;
 
