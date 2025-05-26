@@ -433,6 +433,7 @@ begin
     if FilterRec(rec) then
       filtered.InsertLast(rec);
   // NOTE: Не менять колонку ID! Это сломает поиск записей
+  StringGrid.HideSortArrow;
   redisplay(filtered);
 end;
 
